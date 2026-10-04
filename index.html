@@ -1,0 +1,1739 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A 10-station learning module that prepares English language learners in MTH1W for the digital EQAO Grade 9 math assessment.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Ready for EQAO Math</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Lexend:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a worksheet "sheet" sitting on a whiteboard grid. Station rail on the left (a real sequence, so it is numbered),
+   one station visible at a time. The practice test lives in a framed mock "test screen". Marker colours + highlighter yellow. */
+:root{
+  --paper:#F4F7FB; --grid:#E3E9F2; --panel:#FFFFFF; --ink:#14213D; --muted:#56627A; --line:#D6DEEA;
+  --accent:#1F5FD6; --accent-soft:#E7EEFC; --on-accent:#FFFFFF;
+  --hl:#FFE45C; --on-hl:#2B2400;
+  --good:#1D7F47; --good-soft:#E2F3E9; --bad:#B8342D; --bad-soft:#FBE8E6; --flag:#A85F00; --flag-soft:#FFF0D6;
+  --chart:#FFFEF6; --desk:#E8EDF5; --frame:#1E2A44; --on-frame:#F1F5FB; --frame-2:#2B3958;
+  --font-body:"Lexend", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-hand:"Kalam", "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  --s-1:.875rem; --s0:1rem; --s1:1.15rem; --s2:1.4rem; --s3:1.85rem; --s4:2.4rem;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0E1420; --grid:#172036; --panel:#151E30; --ink:#E6ECF7; --muted:#9CA9C2; --line:#2A3651;
+  --accent:#78A6FF; --accent-soft:#1D2B4A; --on-accent:#0B1220;
+  --hl:#E8CF3E; --on-hl:#1C1700;
+  --good:#5CCB92; --good-soft:#163024; --bad:#FF8A80; --bad-soft:#3A1C1B; --flag:#FFB547; --flag-soft:#38290F;
+  --chart:#1A2438; --desk:#1C263B; --frame:#0A0F1A; --on-frame:#DCE4F2; --frame-2:#1E2A42;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0E1420; --grid:#172036; --panel:#151E30; --ink:#E6ECF7; --muted:#9CA9C2; --line:#2A3651;
+  --accent:#78A6FF; --accent-soft:#1D2B4A; --on-accent:#0B1220;
+  --hl:#E8CF3E; --on-hl:#1C1700;
+  --good:#5CCB92; --good-soft:#163024; --bad:#FF8A80; --bad-soft:#3A1C1B; --flag:#FFB547; --flag-soft:#38290F;
+  --chart:#1A2438; --desk:#1C263B; --frame:#0A0F1A; --on-frame:#DCE4F2; --frame-2:#1E2A42;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.6;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:26px 26px;}
+h1,h2,h3,h4{line-height:1.2;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:var(--accent)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.hand{font-family:var(--font-hand)}
+sup{line-height:0}
+
+/* ---------- shell ---------- */
+.app{max-width:1260px;margin:0 auto;padding-inline:16px;padding-block:20px 56px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:24px;align-items:start}
+.mast{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 24px}
+.mast h1{font-size:var(--s3);font-weight:700;letter-spacing:-.01em}
+.mast h1 .hand{color:var(--accent);font-weight:700;font-size:1.1em}
+.mast .sub{color:var(--muted);font-size:var(--s-1);margin-top:4px}
+.prog{min-width:220px;flex:0 1 300px}
+.prog-label{font-size:var(--s-1);color:var(--muted);display:flex;justify-content:space-between}
+.prog-bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:4px}
+.prog-bar span{display:block;height:100%;background:var(--accent);width:0;transition:width .4s}
+
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px}
+.rail ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.rail button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:10px;width:100%;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:.95rem}
+.rail button:hover{background:var(--accent-soft)}
+.rail button:focus-visible{outline:3px solid var(--accent)}
+.rail .num{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:600;border:1.5px solid var(--line);color:var(--muted);font-variant-numeric:tabular-nums}
+.rail .seen .num{border-color:var(--good);color:var(--good)}
+.rail .tick{font-size:.75rem;color:var(--good);visibility:hidden}
+.rail .seen .tick{visibility:visible}
+.rail button[aria-current="step"],.rail button[aria-current="step"]:hover{background:var(--accent);color:var(--on-accent)}
+.rail [aria-current="step"] .num{border-color:var(--on-accent);color:var(--on-accent)}
+.rail [aria-current="step"] .tick{color:var(--on-accent)}
+.rail .sep{height:1px;background:var(--line);margin:6px 4px}
+
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:clamp(18px,3.4vw,40px);min-width:0;box-shadow:0 1px 0 var(--line)}
+.station{display:grid;gap:28px}
+.st-head{display:grid;gap:10px;max-width:68ch}
+.eyebrow{font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.st-head h2{font-size:var(--s4);font-weight:700;letter-spacing:-.015em}
+.lead{font-size:var(--s1);color:var(--ink)}
+.st-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px}
+.listen{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--accent);background:transparent;color:var(--accent);border-radius:99px;padding:4px 14px;font-size:.9rem;font-weight:500;cursor:pointer}
+.listen svg{width:16px;height:16px}
+.sel{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;padding:4px 12px;border-radius:99px;background:var(--good-soft);color:var(--good);font-weight:500}
+.sel b{font-weight:700}
+.block{display:grid;gap:14px;min-width:0}
+.block>h3{font-size:var(--s2);font-weight:600}
+.block>p,.prose{max-width:68ch}
+.muted{color:var(--muted)}
+.small{font-size:var(--s-1)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
+.box{border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:10px;align-content:start;min-width:0;background:var(--panel)}
+.box h4{font-size:var(--s1);font-weight:600}
+.box ul,.box ol{margin:0;padding-left:1.2em;display:grid;gap:6px}
+.st-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--panel);border-radius:10px;padding:9px 16px;font-weight:500;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.kw{text-decoration:underline dotted var(--accent) 2px;text-underline-offset:4px;cursor:help}
+.pop{position:absolute;z-index:50;max-width:280px;background:var(--ink);color:var(--panel);padding:10px 12px;border-radius:10px;font-size:.9rem;line-height:1.45;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.pop b{display:block;margin-bottom:2px}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);background:var(--ink);color:var(--panel);padding:10px 18px;border-radius:10px;z-index:60;font-size:.95rem;max-width:calc(100% - 32px)}
+mark,.mk{background:var(--hl);color:var(--on-hl);border-radius:3px;padding:0 2px}
+
+/* ---------- welcome ---------- */
+.goals{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+.goals li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:12px 14px;border:1px solid var(--line);border-radius:12px}
+.goals .ic{font-family:var(--font-hand);font-weight:700;color:var(--accent);font-size:1.2rem;line-height:1.3}
+.feel{display:flex;flex-wrap:wrap;gap:8px}
+.feel button{display:grid;justify-items:center;gap:6px;min-width:96px;flex:1 1 96px;padding:10px 8px;border:1.5px solid var(--line);border-radius:12px;background:var(--panel);cursor:pointer;font-size:.9rem}
+.feel .bars{display:flex;gap:3px;align-items:end;height:30px}
+.feel .bars i{width:7px;border-radius:2px;background:var(--line)}
+.feel button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.feel button[aria-pressed="true"] .bars i.on{background:var(--accent)}
+.frame-line{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.frame-line input{flex:1 1 180px;min-width:0;border:none;border-bottom:2px solid var(--line);background:transparent;padding:4px 2px;font-family:var(--font-hand);font-size:1.15rem}
+.frame-line input:focus{outline:none;border-bottom-color:var(--accent)}
+.unit{display:grid;gap:10px;padding:16px 18px;border-radius:12px;background:var(--accent-soft)}
+.unit dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px}
+.unit dt{font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.unit dd{margin:0}
+
+/* ---------- desk ---------- */
+.sortgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:10px}
+.scard{border:1.5px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px;align-content:start}
+.scard .nm{font-weight:600}
+.scard .why{font-size:.88rem;color:var(--muted)}
+.scard .ch{display:flex;gap:6px}
+.scard .ch button{flex:1;border:1.5px solid var(--line);background:transparent;border-radius:8px;padding:5px 6px;font-size:.85rem;cursor:pointer}
+.scard .ch button[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.scard.ok{border-color:var(--good);background:var(--good-soft)}
+.scard.no{border-color:var(--bad);background:var(--bad-soft)}
+.desk-wrap{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+@media(max-width:900px){.desk-wrap{grid-template-columns:minmax(0,1fr)}}
+.desk-svg{width:100%;height:auto;display:block}
+.d-desk{fill:var(--desk);stroke:var(--line);stroke-width:2}
+.d-dev{fill:var(--panel);stroke:var(--ink);stroke-width:2}
+.d-scr{fill:var(--accent-soft);stroke:var(--ink);stroke-width:1.5}
+.d-paper{fill:var(--panel);stroke:var(--muted);stroke-width:1.5}
+.d-rule{stroke:var(--grid);stroke-width:2}
+.d-acc{stroke:var(--accent);stroke-width:4;fill:none;stroke-linecap:round}
+.d-ink{stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round}
+.d-fillacc{fill:var(--accent)}
+.d-fillbad{fill:var(--bad)}
+.d-key{fill:var(--line)}
+.d-lbl{fill:var(--ink);font:600 15px var(--font-body)}
+.d-note{fill:var(--muted);font:400 13px var(--font-body)}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:none;background:transparent;padding:7px 12px;cursor:pointer;font-size:.9rem}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.checks{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.checks label{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;cursor:pointer}
+.checks input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--accent)}
+
+/* ---------- paper first ---------- */
+.route{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;counter-reset:r}
+@media(max-width:760px){.route{grid-template-columns:minmax(0,1fr)}}
+.route li{counter-increment:r;border:1.5px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:4px;align-content:start;position:relative}
+.route li::before{content:counter(r);font-family:var(--font-hand);font-weight:700;font-size:1.6rem;color:var(--accent);line-height:1}
+.route b{font-size:1.05rem}
+.route span{font-size:.9rem;color:var(--muted)}
+.wb{border-radius:14px;border:10px solid var(--line);background:var(--panel);padding:18px 22px;min-height:220px;display:grid;gap:8px;align-content:start;position:relative;
+  background-image:radial-gradient(var(--grid) 1px,transparent 1.2px);background-size:18px 18px}
+.wb .q{font-size:.95rem;color:var(--muted);font-family:var(--font-body)}
+.wb .ln{font-family:var(--font-hand);font-size:1.45rem;line-height:1.35;animation:write .45s ease-out both}
+.wb .ln .b{color:var(--accent)} .wb .ln .r{color:var(--bad)} .wb .ln .g{color:var(--good)}
+@keyframes write{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.wb-ctrl{display:flex;flex-wrap:wrap;gap:8px}
+.foldgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:2px solid var(--ink);border-radius:4px;max-width:420px;background:var(--panel)}
+.foldgrid div{border:1px dashed var(--muted);aspect-ratio:1.25;padding:6px 8px;font-family:var(--font-hand);font-size:1.05rem;color:var(--accent);max-width:100%}
+.answer-line{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.answer-line input{flex:1 1 200px;min-width:0;border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;font-family:var(--font-hand);font-size:1.2rem;background:var(--panel)}
+.fb{font-weight:500}
+.fb.ok{color:var(--good)} .fb.no{color:var(--bad)}
+.frames{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.frames li{font-family:var(--font-hand);font-size:1.2rem;padding:6px 12px;border-left:4px solid var(--hl)}
+
+/* ---------- anchor charts ---------- */
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:18px}
+.ac{background:var(--chart);border:1px solid var(--line);border-radius:4px;padding:16px 16px 18px;display:grid;gap:10px;align-content:start;box-shadow:0 2px 0 var(--line), 0 10px 18px -14px rgba(20,33,61,.35);position:relative}
+.ac::before{content:"";position:absolute;top:-8px;left:50%;width:56px;height:16px;transform:translateX(-50%) rotate(-2deg);background:var(--hl);opacity:.7;border-radius:2px}
+.ac .plot{max-width:190px;margin-inline:auto}
+.ac .two .plot{max-width:130px}
+.ac h4{font-family:var(--font-hand);font-size:1.55rem;font-weight:700;color:var(--accent);line-height:1.1}
+.ac .hand{font-size:1.15rem;line-height:1.35}
+.ac .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ac .two>div{display:grid;gap:4px;align-content:start}
+.ac .lab{font-family:var(--font-hand);font-weight:700;font-size:1.15rem}
+.ac table{border-collapse:collapse;font-family:var(--font-hand);font-size:1.1rem}
+.ac td{padding:1px 8px 1px 0}
+.ac .r{color:var(--bad)} .ac .g{color:var(--good)} .ac .b{color:var(--accent)}
+.match{display:grid;gap:10px}
+.match .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,240px) 24px;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
+@media(max-width:620px){.match .row{grid-template-columns:minmax(0,1fr) 24px}.match .row select{grid-column:1}}
+select{border:1.5px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--panel);max-width:100%}
+.mark-ok{color:var(--good);font-weight:700} .mark-no{color:var(--bad);font-weight:700}
+
+/* ---------- desmos ---------- */
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px;counter-reset:s}
+.steps li{counter-increment:s;border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:6px;align-content:start}
+.steps li h4::before{content:counter(s) ". ";color:var(--accent)}
+.steps h4{font-size:1.02rem;font-weight:600}
+code,.code{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;font-size:.92em;background:var(--accent-soft);padding:1px 6px;border-radius:5px;white-space:nowrap}
+.lab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px;align-items:start}
+@media(max-width:820px){.lab{grid-template-columns:minmax(0,1fr)}}
+.lab-ctrl{display:grid;gap:12px}
+.eq{font-size:1.6rem;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.eq .m{color:var(--accent)} .eq .bb{color:var(--good)}
+.rng{display:grid;grid-template-columns:110px 1fr 54px;gap:10px;align-items:center}
+.rng input{accent-color:var(--accent);width:100%}
+.rng output{font-variant-numeric:tabular-nums;text-align:right;font-weight:600}
+.presets{display:flex;flex-wrap:wrap;gap:6px}
+.presets button{border:1.5px solid var(--line);background:var(--panel);border-radius:99px;padding:5px 12px;cursor:pointer;font-size:.88rem}
+.presets button:hover{border-color:var(--accent)}
+.plotbox{border:1px solid var(--line);border-radius:12px;padding:8px;background:var(--panel)}
+.plot{width:100%;height:auto;display:block;max-width:100%}
+.g-grid{stroke:var(--grid);stroke-width:1}
+.g-axis{stroke:var(--muted);stroke-width:1.5}
+.g-line{stroke:var(--accent);stroke-width:2.6;fill:none;stroke-linecap:round}
+.g-line.ghost{stroke:var(--muted);stroke-dasharray:5 5;stroke-width:1.8}
+.g-line.alt{stroke:var(--good)}
+.g-pt{fill:var(--accent);stroke:var(--panel);stroke-width:1.5}
+.g-txt{fill:var(--muted);font:500 10px var(--font-body)}
+.g-ptl{fill:var(--ink);font:600 11px var(--font-body)}
+.tcheck{display:grid;gap:10px}
+.tc-row{display:grid;grid-template-columns:44px repeat(5,minmax(0,1fr));gap:6px;align-items:center;font-variant-numeric:tabular-nums}
+.tc-row input{width:100%;min-width:0;border:1.5px solid var(--line);border-radius:8px;padding:6px;text-align:center;background:var(--panel)}
+.tc-row span{text-align:center}
+.tc-row .h{font-weight:700;text-align:left}
+.verdict{padding:10px 14px;border-radius:10px;font-weight:500}
+.verdict.lin{background:var(--good-soft);color:var(--good)} .verdict.non{background:var(--flag-soft);color:var(--flag)}
+
+/* ---------- decode ---------- */
+.decode-steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px;counter-reset:d}
+.decode-steps li{counter-increment:d;padding:12px;border-radius:12px;border:1px solid var(--line);display:grid;gap:4px;align-content:start}
+.decode-steps li::before{content:counter(d);font-family:var(--font-hand);font-weight:700;color:var(--accent);font-size:1.5rem;line-height:1}
+.decode-steps b{font-size:1rem}
+.decode-steps span{font-size:.9rem;color:var(--muted)}
+.hx{border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px}
+.hx-text{font-size:1.12rem;line-height:2}
+.hx-text .tk{cursor:pointer;border-radius:3px;padding:1px 1px;transition:background .15s}
+.hx-text .tk:hover{background:var(--accent-soft)}
+.hx-text .tk.on{background:var(--hl);color:var(--on-hl)}
+.hx-text .tk.reveal{outline:2px solid var(--accent);outline-offset:1px}
+.hx-keys{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.hx-keys li{display:grid;grid-template-columns:minmax(120px,auto) 1fr;gap:12px;padding:6px 10px;border-radius:8px;background:var(--accent-soft)}
+.hx-keys li b{color:var(--accent)}
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:10px}
+.wcard{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px;align-content:start}
+.wcard .t{font-weight:700;font-size:1.05rem;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.wcard .t button{border:none;background:transparent;color:var(--accent);cursor:pointer;padding:2px}
+.wcard .t svg{width:18px;height:18px}
+.wcard .m{font-size:.93rem}
+.wcard .ex{font-family:var(--font-hand);font-size:1.1rem;color:var(--accent)}
+.wcard label{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.wcard input{border:none;border-bottom:1.5px dashed var(--line);background:transparent;padding:3px 0;font-size:1rem;min-width:0;width:100%}
+.wcard input:focus{outline:none;border-bottom-color:var(--accent)}
+
+/* ---------- facts ---------- */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:10px}
+.fact{padding:14px;border-radius:12px;background:var(--accent-soft);display:grid;gap:2px}
+.fact b{font-size:1.6rem;color:var(--accent);line-height:1.1}
+.fact span{font-size:.9rem}
+.rules{display:grid;gap:8px;margin:0;padding-left:1.2em;max-width:72ch}
+.tour{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+@media(max-width:1000px){.tour{grid-template-columns:minmax(0,1fr)}}
+.legend{list-style:none;margin:0;padding:0;display:grid;gap:6px;counter-reset:lg}
+.legend button{all:unset;box-sizing:border-box;counter-increment:lg;display:grid;grid-template-columns:26px 1fr;gap:10px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);cursor:pointer;width:100%;font-size:.93rem}
+.legend button::before{content:counter(lg);width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:.8rem}
+.legend button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.legend button:focus-visible{outline:3px solid var(--accent)}
+.legend .lt{font-weight:600;display:block}
+.legend .ld{display:none;color:var(--ink);margin-top:4px}
+.legend button[aria-pressed="true"] .ld{display:block}
+.disclaimer{font-size:.85rem;color:var(--muted);border-left:3px solid var(--flag);padding:6px 12px;background:var(--flag-soft);border-radius:0 8px 8px 0}
+.types{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+
+/* ---------- mock test screen ---------- */
+.tx{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--panel);display:grid;min-width:0;position:relative}
+.tx-top{background:var(--frame);color:var(--on-frame);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;padding:8px 12px}
+.tx-where{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:.9rem}
+.tx-where .tx-session{font-weight:700}
+.tx-where .tx-stage{opacity:.85}
+.tx-tools{display:flex;flex-wrap:wrap;gap:4px}
+.tool{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--frame-2);background:var(--frame-2);color:var(--on-frame);border-radius:8px;padding:5px 9px;cursor:pointer;font-size:.82rem}
+.tool svg{width:18px;height:18px;flex:none}
+.tool[aria-pressed="true"]{background:var(--hl);color:var(--on-hl);border-color:var(--hl)}
+.tool.ic span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.tx-zoom{display:inline-flex;gap:4px}
+.tx-nav{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--paper)}
+.tx-nav button{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--panel);cursor:pointer;font-weight:600;font-size:.9rem;position:relative;font-variant-numeric:tabular-nums}
+.tx-nav button.ans{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.tx-nav button.cur{outline:3px solid var(--ink);outline-offset:1px}
+.tx-nav button.flg::after{content:"";position:absolute;top:-5px;right:-5px;width:12px;height:12px;border-radius:50%;background:var(--flag);border:2px solid var(--panel)}
+.tx-body{display:grid;grid-template-columns:minmax(0,1fr);min-height:360px}
+.tx-body.has-panel{grid-template-columns:minmax(0,1fr) 270px}
+@media(max-width:760px){.tx-body.has-panel{grid-template-columns:minmax(0,1fr)}}
+.tx-q{--z:1;font-size:calc(1rem * var(--z));padding:18px 20px 22px;display:grid;gap:14px;align-content:start;position:relative;min-width:0}
+.tx-qhead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;align-items:baseline}
+.tx-qnum{font-weight:700;font-size:1.1em}
+.tx-src{font-size:.78rem;color:var(--muted)}
+.tx-stem{font-size:1.08em;line-height:1.65;max-width:62ch}
+.tx.hl-on .tx-stem .w{cursor:pointer}
+.tx.hl-on .tx-stem .w:hover{background:var(--accent-soft);border-radius:3px}
+.tx-media{min-width:0}
+.opts{display:grid;gap:8px}
+.opts.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:520px){.opts.grid{grid-template-columns:minmax(0,1fr)}}
+.opt{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:center;text-align:left;border:1.5px solid var(--line);background:var(--panel);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:1em}
+.opt:hover{border-color:var(--accent)}
+.opt .opt-l{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--muted);display:grid;place-items:center;font-weight:700;font-size:.85em}
+.opt[role="checkbox"] .opt-l{border-radius:6px}
+.opt[aria-checked="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.opt[aria-checked="true"] .opt-l{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.opt .opt-c{min-width:0;overflow-x:auto}
+.pick-note{font-size:.88em;color:var(--muted)}
+.pick-note.warn{color:var(--flag);font-weight:600}
+.dd-line{font-size:1.08em;line-height:2.4}
+.dd-line select{font-size:1em;margin:0 4px}
+.sort{display:grid;gap:12px}
+.sort-pool{min-height:64px;border:2px dashed var(--line);border-radius:10px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sort-pool:empty::before{content:"All cards are placed.";color:var(--muted);font-size:.9em}
+.sort-bins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.bin{border:2px solid var(--line);border-radius:10px;min-height:120px;display:grid;grid-template-rows:auto 1fr;cursor:pointer}
+.bin.over{border-color:var(--accent);background:var(--accent-soft)}
+.bin-h{font-weight:700;padding:6px 10px;border-bottom:1px solid var(--line);background:var(--paper);border-radius:8px 8px 0 0}
+.bin-items{display:flex;flex-wrap:wrap;gap:8px;padding:8px;align-content:start}
+.chip{border:1.5px solid var(--ink);background:var(--panel);border-radius:8px;padding:6px 10px;cursor:grab;font-size:.95em;max-width:100%}
+.chip.sel{outline:3px solid var(--accent);outline-offset:1px;background:var(--accent-soft)}
+.tx-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 12px;border-top:1px solid var(--line);background:var(--paper)}
+.tx-foot .tx-time{margin-left:auto;margin-right:auto;font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.tbtn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--panel);border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:500;font-size:.92rem}
+.tbtn svg{width:16px;height:16px}
+.tbtn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.tbtn:disabled{opacity:.45;cursor:not-allowed}
+.tx-flag[aria-pressed="true"]{background:var(--flag-soft);border-color:var(--flag);color:var(--flag)}
+.tx-panel{border-left:1px solid var(--line);padding:14px;display:grid;gap:10px;align-content:start;background:var(--paper);min-width:0}
+@media(max-width:760px){.tx-panel{border-left:none;border-top:1px solid var(--line)}}
+.pn-h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pn-h button{border:none;background:transparent;color:var(--accent);cursor:pointer;font-size:.88rem}
+.calc-in{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:8px;font-variant-numeric:tabular-nums;background:var(--panel);font-size:1.05rem}
+.calc-keys{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.calc-keys button{padding:8px 0;border:1px solid var(--line);border-radius:6px;background:var(--panel);cursor:pointer;font-variant-numeric:tabular-nums}
+.calc-keys .eqk{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.calc-out{font-size:1.3rem;font-weight:700;text-align:right;font-variant-numeric:tabular-nums;min-height:1.6em;word-break:break-all}
+.docs{font-size:.9rem;display:grid;gap:8px}
+.docs h5{margin:0;font-size:.95rem}
+.docs p{margin:0}
+.rd{position:absolute;left:0;right:0;pointer-events:none;z-index:3}
+.rd-top{top:0;background:rgba(10,15,26,.55)}
+.rd-bot{bottom:0;background:rgba(10,15,26,.55)}
+.rd-band{border-top:2px solid var(--hl);border-bottom:2px solid var(--hl)}
+.tx-review{position:absolute;inset:0;background:var(--panel);z-index:5;overflow:auto;padding:20px}
+.rv{display:grid;gap:14px;max-width:640px}
+.rv h3{font-size:1.3rem}
+.rv-sum{display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:99px;font-size:.82rem;font-weight:600;background:var(--accent-soft);color:var(--accent)}
+.pill.flag{background:var(--flag-soft);color:var(--flag)}
+.pill.blank{background:var(--bad-soft);color:var(--bad)}
+.rv-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr));gap:6px}
+.rv-list li{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:6px 8px;border:1px solid var(--line);border-radius:8px}
+.rv-list button{border:none;background:transparent;color:var(--accent);font-weight:600;cursor:pointer;padding:0;text-decoration:underline}
+.rv-actions{display:flex;flex-wrap:wrap;gap:8px}
+.rv-confirm{border:2px solid var(--flag);background:var(--flag-soft);border-radius:12px;padding:14px;display:grid;gap:10px}
+.spot{outline:3px solid var(--hl)!important;outline-offset:3px;border-radius:8px;animation:pulse 1.2s ease-in-out 2}
+@keyframes pulse{50%{outline-offset:7px}}
+.vt{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.97em}
+.vt th,.vt td{border:1.5px solid var(--muted);padding:5px 14px;text-align:center}
+.vt th{background:var(--paper);font-weight:600}
+.vt.sm th,.vt.sm td{padding:2px 10px}
+.vt.xs th,.vt.xs td{padding:1px 7px;font-size:.92em}
+.tblwrap{overflow-x:auto;max-width:100%}
+
+/* ---------- calm ---------- */
+.breath{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;align-items:center}
+@media(max-width:620px){.breath{grid-template-columns:minmax(0,1fr);justify-items:center}}
+.bsq{width:180px;height:180px;position:relative;border:3px solid var(--accent);border-radius:14px;background:var(--accent-soft)}
+.bdot{position:absolute;width:22px;height:22px;border-radius:50%;background:var(--accent);left:-12px;top:calc(100% - 10px);transition-property:left,top;transition-timing-function:linear}
+.bword{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:var(--font-hand);font-size:1.5rem;font-weight:700;color:var(--accent);padding:12px;line-height:1.1}
+.flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px}
+.flip{text-align:left;border:1.5px solid var(--line);border-radius:12px;padding:14px;background:var(--panel);cursor:pointer;display:grid;gap:6px;min-height:110px;align-content:start}
+.flip .k{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.flip .tx1{font-family:var(--font-hand);font-size:1.35rem;line-height:1.25}
+.flip .front{color:var(--bad)}
+.flip .back{color:var(--good)}
+.flip[aria-pressed="true"]{border-color:var(--good);background:var(--good-soft)}
+details.acc{border:1px solid var(--line);border-radius:10px;padding:0 14px}
+details.acc summary{cursor:pointer;padding:12px 0;font-weight:600}
+details.acc[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+details.acc>div{padding-bottom:12px;display:grid;gap:6px}
+
+/* ---------- practice ---------- */
+.res-head{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.score{font-size:2.6rem;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1}
+.res{border:1px solid var(--line);border-radius:10px;padding:0 14px}
+.res summary{cursor:pointer;display:grid;grid-template-columns:42px 80px minmax(0,1fr);gap:10px;align-items:center;padding:10px 0}
+.res .res-n{font-weight:700;font-variant-numeric:tabular-nums}
+.res .res-tag{font-size:.8rem;font-weight:700;padding:2px 8px;border-radius:99px;text-align:center}
+.res.ok .res-tag{background:var(--good-soft);color:var(--good)}
+.res.no .res-tag{background:var(--bad-soft);color:var(--bad)}
+.res-b{display:grid;gap:8px;padding-bottom:14px;max-width:72ch}
+.res-tip{padding:8px 12px;border-radius:8px;background:var(--hl);color:var(--on-hl)}
+.res-tip span{font-weight:700;margin-right:6px}
+.res-list{display:grid;gap:8px}
+
+/* ---------- tips ---------- */
+.tipgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px}
+.tipcol{border-top:6px solid var(--accent);border-radius:4px 4px 12px 12px;background:var(--paper);padding:16px;display:grid;gap:10px;align-content:start}
+.tipcol:nth-child(2){border-top-color:var(--good)}
+.tipcol:nth-child(3){border-top-color:var(--flag)}
+.tipcol:nth-child(4){border-top-color:var(--ink)}
+.tipcol h4{font-size:1.15rem}
+.tipcol ul{margin:0;padding-left:1.1em;display:grid;gap:8px}
+
+/* ---------- teacher ---------- */
+.tt{width:100%;border-collapse:collapse;font-size:.93rem}
+.tt th,.tt td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.tt th{font-weight:600;background:var(--paper)}
+.quote{border-left:4px solid var(--accent);padding:6px 14px;background:var(--accent-soft);border-radius:0 10px 10px 0;max-width:72ch}
+
+/* ---------- mobile ---------- */
+@media(max-width:900px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;padding:6px;overflow-x:auto}
+  .rail ol{grid-auto-flow:column;grid-auto-columns:max-content}
+  .rail button{grid-template-columns:26px auto;padding:6px 10px}
+  .rail .tick,.rail .sep{display:none}
+  .st-head h2{font-size:var(--s3)}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="mast">
+    <div>
+      <h1>Ready for <span class="hand">EQAO</span> Math</h1>
+      <p class="sub">Digital test skills for MTH1W · Practice with Characteristics of Relations (C4.1 and C4.4)</p>
+    </div>
+    <div class="prog" aria-live="polite">
+      <div class="prog-label"><span>Your progress</span><span id="prog-txt">0 of 10 stations</span></div>
+      <div class="prog-bar"><span id="prog-bar"></span></div>
+    </div>
+  </header>
+
+  <nav class="rail" aria-label="Stations">
+    <ol id="rail"></ol>
+  </nav>
+
+  <main class="sheet" id="sheet">
+
+<!-- ============ 1 WELCOME ============ -->
+<section class="station" id="welcome" data-label="Welcome">
+  <header class="st-head">
+    <p class="eyebrow">Station 1 of 10</p>
+    <h2>Get ready for a test on a computer</h2>
+    <p class="lead" data-read>Near the end of this course, you will write the EQAO Grade 9 math test on a computer. The math is the same math you learn in class. The computer part is new. This module teaches you how to work smart on a digital test.</p>
+    <div class="st-tools"><button class="listen" type="button"></button><span class="sel"><b>SEL</b> Recognizing and identifying emotions</span></div>
+  </header>
+
+  <div class="block">
+    <h3>Today I can…</h3>
+    <ul class="goals">
+      <li><span class="ic">✓</span><span>set up my desk with the tools I am allowed to use.</span></li>
+      <li><span class="ic">✓</span><span>solve on paper first, then click my answer.</span></li>
+      <li><span class="ic">✓</span><span>use anchor charts and Desmos to check my thinking.</span></li>
+      <li><span class="ic">✓</span><span>find the <span class="kw" tabindex="0" data-def="Important words that tell you what math to do.">key words</span> in a question and understand them.</span></li>
+      <li><span class="ic">✓</span><span>use the tools on the test screen: flag, highlighter, read aloud.</span></li>
+      <li><span class="ic">✓</span><span>notice my feelings and use a strategy to stay calm.</span></li>
+    </ul>
+  </div>
+
+  <div class="unit">
+    <h3 style="font-size:var(--s1)">We will practise with our last unit</h3>
+    <dl>
+      <dt>C4.1</dt><dd>Compare graphs, tables of values, and equations of <span class="kw" tabindex="0" data-def="A straight line. y changes by the same amount every step.">linear</span> and <span class="kw" tabindex="0" data-def="Not a straight line. The change is not the same every step.">non-linear</span> relations.</dd>
+      <dt>C4.4</dt><dd>Find the equation of a line from a graph, a table, or a model. Connect <span class="kw" tabindex="0" data-def="How steep a line is. The m in y = mx + b.">slope</span> with <span class="kw" tabindex="0" data-def="How much y changes when x goes up by 1.">rate of change</span>, and the <span class="kw" tabindex="0" data-def="Where the line crosses the y-axis. The b in y = mx + b.">y-intercept</span> with the <span class="kw" tabindex="0" data-def="The starting amount, when x = 0.">initial value</span>.</dd>
+    </dl>
+    <p class="small muted">Tip: words with a dotted line have a meaning. Tap or click them.</p>
+  </div>
+
+  <div class="block">
+    <h3>Check in: how do you feel about the EQAO test?</h3>
+    <p>Choose one. All feelings are okay. New things can feel exciting or uncomfortable at first.</p>
+    <div class="feel" id="feel-in" data-key="feelIn"></div>
+    <div class="frame-line"><span>I feel</span><input id="feelin-a" aria-label="I feel" placeholder="nervous"><span>because</span><input id="feelin-b" aria-label="because" placeholder="it is on a computer"></div>
+  </div>
+
+  <div class="st-foot"><span></span><button class="btn primary" type="button" data-next>Next: Set up your desk →</button></div>
+</section>
+
+<!-- ============ 2 DESK ============ -->
+<section class="station" id="desk" data-label="Set up your desk" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Station 2 of 10</p>
+    <h2>Set up your desk</h2>
+    <p class="lead" data-read>A calm test starts with a ready desk. Know what you are allowed to use. Put each thing in the same place every time you practise. Then your hands know where to go on test day.</p>
+    <div class="st-tools"><button class="listen" type="button"></button><span class="sel"><b>SEL</b> Recognizing sources of stress</span></div>
+  </header>
+
+  <div class="block">
+    <h3>Allowed or not allowed?</h3>
+    <p>Choose for each item. Then press <b>Check my answers</b>.</p>
+    <div class="sortgrid" id="desk-sort"></div>
+    <div class="wb-ctrl"><button class="btn primary" type="button" id="desk-check">Check my answers</button><button class="btn" type="button" id="desk-reset">Try again</button><span class="fb" id="desk-fb" aria-live="polite"></span></div>
+  </div>
+
+  <div class="block">
+    <h3>A good desk layout</h3>
+    <div class="desk-wrap">
+      <div class="plotbox"><svg class="desk-svg" id="desk-svg" viewBox="0 0 640 400" role="img" aria-label="Top view of a desk: laptop in the centre, paper and pencil on the writing-hand side, headphones and calculator on the other side, phone in the bag."></svg></div>
+      <div class="block">
+        <div class="seg" role="group" aria-label="Writing hand"><button type="button" data-hand="right" aria-pressed="true">I write with my right hand</button><button type="button" data-hand="left" aria-pressed="false">Left hand</button></div>
+        <p>Put your paper on the side of your writing hand. Then you can write and click without moving things around.</p>
+        <p class="small muted">Your rough-work paper is collected after each session. It is not marked. Only the answer you click counts.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Before you press Start</h3>
+    <ul class="checks" id="desk-checks"></ul>
+  </div>
+
+  <div class="st-foot"><button class="btn" type="button" data-prev>← Back</button><button class="btn primary" type="button" data-next>Next: Paper first →</button></div>
+</section>
+
+<!-- ============ 3 PAPER FIRST ============ -->
+<section class="station" id="paper" data-label="Paper first" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Station 3 of 10</p>
+    <h2>Solve on paper first, then click</h2>
+    <p class="lead" data-read>On a computer, it is easy to click fast and guess. Strong students do the math on a whiteboard or on paper first. Then they click the answer that matches their work.</p>
+    <div class="st-tools"><button class="listen" type="button"></button><span class="sel"><b>SEL</b> Building healthy relationships and communicating effectively</span></div>
+  </header>
+
+  <div class="block">
+    <h3>The routine for every question</h3>
+    <ol class="route">
+      <li><b>Read</b><span>Read it two times, or listen with headphones.</span></li>
+      <li><b>Write</b><span>Write what you know: numbers, m, b, the table.</span></li>
+      <li><b>Solve</b><span>Do the math on paper. Show each step.</span></li>
+      <li><b>Check</b><span>Does it make sense? Check with Desmos or an anchor chart.</span></li>
+      <li><b>Click</b><span>Choose the answer that matches. Flag it if you are not sure.</span></li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h3>Watch it on the whiteboard</h3>
+    <p class="muted small">EQAO released question, November 2025, #14</p>
+    <div class="wb" id="wb" aria-live="polite">
+      <p class="q">A line is represented by the equation y = 6x. The slope doubles, and the y-intercept decreases by 5. What is the equation of the new line?</p>
+    </div>
+    <div class="wb-ctrl"><button class="btn primary" type="button" id="wb-next">Show the next step</button><button class="btn" type="button" id="wb-reset">Start over</button></div>
+  </div>
+
+  <div class="cols">
+    <div class="box">
+      <h4>Your turn: use your whiteboard</h4>
+      <p>A line is represented by y = −2x + 7. The slope <b>triples</b>, and the y-intercept <b>increases by 3</b>. What is the new equation?</p>
+      <div class="answer-line"><label for="yt-in" class="small muted">y =</label><input id="yt-in" placeholder="type your equation"><button class="btn" type="button" id="yt-check">Check</button></div>
+      <p class="fb" id="yt-fb" aria-live="polite"></p>
+      <details class="acc"><summary>Show the solution</summary><div class="hand" style="font-size:1.2rem">
+        <p>m = −2, b = 7</p><p>triples → −2 × 3 = −6</p><p>increases by 3 → 7 + 3 = 10</p><p><b>y = −6x + 10</b></p></div></details>
+    </div>
+    <div class="box">
+      <h4>Fold your paper into boxes</h4>
+      <p>Write one question number in each box. When you come back to a flagged question, your work is easy to find.</p>
+      <div class="foldgrid" aria-hidden="true"><div>Q1</div><div>Q2</div><div>Q3</div><div>Q4</div><div>Q5</div><div>Q6</div><div>Q7</div><div>Q8</div></div>
+    </div>
+    <div class="box">
+      <h4>Talk it out with a partner</h4>
+      <p>In class, explain your whiteboard work. Use these sentence frames:</p>
+      <ul class="frames">
+        <li>First I ___. Then I ___.</li>
+        <li>The slope is ___ because ___.</li>
+        <li>The y-intercept is ___ because ___.</li>
+        <li>I agree / disagree with ___ because ___.</li>
+        <li>Can you show me how you got ___?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="st-foot"><button class="btn" type="button" data-prev>← Back</button><button class="btn primary" type="button" data-next>Next: Anchor charts →</button></div>
+</section>
+
+<!-- ============ 4 ANCHOR CHARTS ============ -->
+<section class="station" id="charts" data-label="Anchor charts" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Station 4 of 10</p>
+    <h2>Use the anchor charts in our room</h2>
+    <p class="lead" data-read>Our anchor charts stay on the classroom walls during the test. If you forget a word or a rule, look up at the right chart. Learn where each chart is before test day.</p>
+    <div class="st-tools"><button class="listen" type="button"></button><span class="sel"><b>SEL</b> Identifying resources and supports that aid perseverance</span></div>
+  </header>
+
+  <div class="charts" id="anchor-charts"></div>
+
+  <div class="block">
+    <h3>Which chart would help?</h3>
+    <p>Read each question. Choose the anchor chart you would look at.</p>
+    <div class="match" id="ac-match"></div>
+    <div class="wb-ctrl"><button class="btn primary" type="button" id="ac-check">Check</button><span class="fb" id="ac-fb" aria-live="polite"></span></div>
+  </div>
+
+  <div class="box" style="max-width:72ch">
+    <h4>How to use a chart during the test</h4>
+    <ol>
+      <li>Find the key word in the question, for example <i>slope</i>.</li>
+      <li>Look up at the chart for that word.</li>
+      <li>Look back at the question and use the rule on your paper.</li>
+    </ol>
+    <p class="small muted">Make it a habit now. Every time you practise, look up at a chart at least once.</p>
+  </div>
+
+  <div class="st-foot"><button class="btn" type="button" data-prev>← Back</button><button class="btn primary" type="button" data-next>Next: Desmos →</button></div>
+</section>
+
+<!-- ============ 5 DESMOS ============ -->
+<section class="station" id="desmos" data-label="Desmos" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Station 5 of 10</p>
+    <h2>Check your thinking with Desmos</h2>
+    <p class="lead" data-read>Desmos is a free graphing calculator. You can use a graphing tool on the test if you use it often in class. Use Desmos to check your paper work. Do the thinking yourself first.</p>
+    <div class="st-tools"><button class="listen" type="button"></button><span class="sel"><b>SEL</b> Developing critical and creative mathematical thinking</span><a class="btn" href="https://www.desmos.com/calculator" target="_blank" rel="noopener">Open Desmos ↗</a></div>
+  </header>
+
+  <div class="block">
+    <h3>Six Desmos moves for this unit</h3>
+    <ol class="steps">
+      <li><h4>Graph an equation</h4><p>Type <code>y=12x-5</code>. Use <code>-</code> for minus. Do not type the × sign: <code>12x</code> means 12 times x.</p></li>
+      <li><h4>Read the y-intercept</h4><p>Click the line. Grey points appear. Click the point on the y-axis to see (0, b).</p></li>
+      <li><h4>Make a table</h4><p>Press <b>+</b>, then <b>table</b>. Type the x and y values. Do the points make a straight line? Then it is linear.</p></li>
+      <li><h4>Find the equation from a table</h4><p>Under the table, type <code>y_1~mx_1+b</code>. Desmos shows m and b. Use this to check, not to replace your work.</p></li>
+      <li><h4>See what m and b do</h4><p>Type <code>y=mx+b</code> and click <b>add slider</b> for m and b. Move them and watch the line.</p></li>
+      <li><h4>Find where lines meet</h4><p>Type two equations. Click the point where they cross to see its coordinates.</p></li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h3>Slider lab</h3>
+    <p>Try the EQAO question from Station 3. Press the buttons in order and watch the line change.</p>
+    <div class="lab">
+      <div class="lab-ctrl">
+        <div class="eq" id="lab-eq" aria-live="polite"></div>
+        <div class="rng"><label for="lab-m">slope m</label><input type="range" id="lab-m" min="-12" max="12" step="0.5" value="6"><output id="lab-mo">6</output></div>
+        <div class="rng"><label for="lab-b">y-intercept b</label><input type="range" id="lab-b" min="-10" max="10" step="1" value="0"><output id="lab-bo">0</output></div>
+        <div class="presets"><button type="button" data-preset="start">1. Start: y = 6x</button><button type="button" data-preset="double">2. Slope doubles</button><button type="button" data-preset="down5">3. y-intercept decreases by 5</button></div>
+        <label class="small" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="lab-ghost" checked> Show the starting line y = 6x (dashed)</label>
+        <p class="small muted" id="lab-note">The slope tells you how steep the line is. The y-intercept tells you where it crosses the y-axis.</p>
+      </div>
+      <div class="plotbox" id="lab-plot"></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Table checker: linear or non-linear?</h3>
+    <p>Type y-values for x = 0 to 4. The checker finds the first differences, the same way you do on paper.</p>
+    <div class="lab">
+      <div class="tcheck">
+        <div class="tc-row"><span class="h">x</span><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span></div>
+        <div class="tc-row"><span class="h">y</span><input id="tc-0" value="3" inputmode="decimal" aria-label="y when x is 0"><input id="tc-1" value="7" inputmode="decimal" aria-label="y when x is 1"><input id="tc-2" value="11" inputmode="decimal" aria-label="y when x is 2"><input id="tc-3" value="15" inputmode="decimal" aria-label="y when x is 3"><input id="tc-4" value="19" inputmode="decimal" aria-label="y when x is 4"></div>
+        <div class="tc-row" id="tc-diff" aria-label="First differences"></div>
+        <div class="presets"><button type="button" data-tc="3,7,11,15,19">Example: 3, 7, 11…</button><button type="button" data-tc="1,2,4,8,16">Example: 1, 2, 4, 8…</button><button type="button" data-tc="60,55,50,45,40">Example: 60, 55, 50…</button></div>
+        <div class="verdict" id="tc-out" aria-live="polite"></div>
+      </div>
+      <div class="plotbox" id="tc-plot"></div>
+    </div>
+  </div>
+
+  <div class="st-foot"><button class="btn" type="button" data-prev>← Back</button><button class="btn primary" type="button" data-next>Next: Break down the question →</button></div>
+</section>
+
+<!-- ============ 6 DECODE ============ -->
+<section class="station" id="decode" data-label="Break down the question" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Station 6 of 10</p>
+    <h2>Break down the question</h2>
+    <p class="lead" data-read>EQAO questions use a lot of words. You do not need to know every word. You need the key words. Key words tell you what the question is asking and what math to do.</p>
+    <div class="st-tools"><button class="listen" type="button"></button><span class="sel"><b>SEL</b> Developing critical and creative mathematical thinking</span></div>
+  </header>
+
+  <div class="block">
+    <h3>Five steps to break down a question</h3>
+    <ol class="decode-steps">
+      <li><b>Read or listen</b><span>Read it two times. Use the read-aloud tool if you want.</span></li>
+      <li><b>Find the question</b><span>The last sentence is usually the question. What are they asking for?</span></li>
+      <li><b>Highlight key words</b><span>slope, y-intercept, constant, doubles, decreases by…</span></li>
+      <li><b>Circle numbers and units</b><span>L, min, $, per month</span></li>
+      <li><b>Predict</b><span>Guess the answer before you read the choices.</span></li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h3>Practise with the highlighter</h3>
+    <p>Click the key words in each question. Then press <b>Check my highlights</b>.</p>
+    <div id="hx1"></div>
+    <div id="hx2"></div>
+  </div>
+
+  <div class="block">
+    <h3>Word wall</h3>
+    <p>Learn these words in English now. On the test, the glossary is English–French only, and translation apps are not allowed. Write each word in your own language to help you remember. Your notes stay in this browser.</p>
+    <div class="wall" id="wall"></div>
+  </div>
+
+  <div class="st-foot"><button class="btn" type="button" data-prev>← Back</button><button class="btn primary" type="button" data-next>Next: The test screen →</button></div>
+</section>
+
+<!-- ============ 7 SCREEN ============ -->
+<section class="station" id="screen" data-label="The test screen" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Station 7 of 10</p>
+    <h2>Tour the test screen</h2>
+    <p class="lead" data-read>The EQAO test happens on a computer screen with tools. Learn the tools now, so you do not waste time on test day. Click a number in the list to see where each tool is. Then try it.</p>
+    <div class="st-tools"><button class="listen" type="button"></button><span class="sel"><b>SEL</b> Recognizing sources of stress</span></div>
+  </header>
+
+  <div class="block">
+    <h3>How the test works</h3>
+    <div class="facts">
+      <div class="fact"><b>2</b><span>sessions: Session A and Session B</span></div>
+      <div class="fact"><b>2</b><span>stages in each session, 4 stages in total</span></div>
+      <div class="fact"><b>~60 min</b><span>for each session (two stages)</span></div>
+      <div class="fact"><b>Adaptive</b><span>Your Stage 1 work decides if Stage 2 is easier or harder.</span></div>
+    </div>
+    <ul class="rules">
+      <li>You can <b>flag</b> a question to come back to it later.</li>
+      <li>Before you submit a stage, the test shows you questions that are flagged or blank.</li>
+      <li><b>After you submit a stage, you cannot go back to it.</b></li>
+      <li>Your teacher can answer questions about the computer and the tools. Your teacher cannot help with the math.</li>
+      <li>You can use headphones, paper, a pencil, a calculator, the EQAO Formula Sheet and the English–French glossary.</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Explore the screen</h3>
+    <p class="disclaimer">This is a practice screen made for our class. It is not the real EQAO platform, and the real screen may look a little different. You can try the official sample test on the <a href="https://www.eqao.com/the-assessments/grade-9-math/" target="_blank" rel="noopener">EQAO website</a>.</p>
+    <div class="tour">
+      <div id="tour-test"></div>
+      <ol class="legend" id="tour-legend"></ol>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Question types you will see</h3>
+    <div class="types">
+      <div class="box"><h4>Multiple choice</h4><p>Choose <b>one</b> answer from A, B, C, D.</p><p class="small muted">Example: 2025 released #14. Practice test, Stage 1, Q2.</p></div>
+      <div class="box"><h4>Select the TWO</h4><p>Choose <b>exactly two</b> answers. Square boxes mean more than one answer.</p><p class="small muted">Example: 2025 released #1. Practice test, Stage 1, Q6.</p></div>
+      <div class="box"><h4>Drag and drop</h4><p>Move cards into the correct boxes. On our practice screen you can also tap a card, then tap a box.</p><p class="small muted">Example: 2024 released #15. Practice test, Stage 1, Q8.</p></div>
+      <div class="box"><h4>Complete the statement</h4><p>Choose words or numbers from a list to finish a sentence.</p><p class="small muted">Example: 2025 released #12. Practice test, Stage 1, Q7.</p></div>
+    </div>
+  </div>
+
+  <div class="st-foot"><button class="btn" type="button" data-prev>← Back</button><button class="btn primary" type="button" data-next>Next: Calm and confident →</button></div>
+</section>
+
+<!-- ============ 8 CALM ============ -->
+<section class="station" id="calm" data-label="Calm and confident" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Station 8 of 10</p>
+    <h2>Stay calm and confident</h2>
+    <p class="lead" data-read>It is normal to feel stress on a test. A little stress can help you focus. Too much stress can make your mind go blank. You can learn ways to calm your body and your thoughts.</p>
+    <div class="st-tools"><button class="listen" type="button"></button><span class="sel"><b>SEL</b> Recognizing sources of stress · Healthy math identity</span></div>
+  </header>
+
+  <div class="block">
+    <h3>Box breathing</h3>
+    <div class="breath">
+      <div class="bsq" aria-hidden="true"><div class="bdot" id="bdot"></div><div class="bword" id="bword">Ready?</div></div>
+      <div class="block">
+        <p>Follow the dot. Breathe in for 4, hold for 4, breathe out for 4, hold for 4. Do it 4 times. You can do this at your desk before you start, or any time you feel stuck.</p>
+        <div class="wb-ctrl"><button class="btn primary" type="button" id="b-start">Start breathing</button><button class="btn" type="button" id="b-stop">Stop</button></div>
+        <p class="small muted">The test platform also has calming exercises you can use before a session starts.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Change your self-talk</h3>
+    <p>Tap a card to change the thought.</p>
+    <div class="flips" id="flips"></div>
+  </div>
+
+  <div class="block">
+    <h3>If this happens, try this</h3>
+    <div class="block" id="stress-acc" style="gap:8px"></div>
+  </div>
+
+  <div class="cols">
+    <div class="box">
+      <h4>Name it to tame it</h4>
+      <div class="frame-line"><span>I'm feeling</span><input id="calm-a" aria-label="I'm feeling" placeholder="worried"></div>
+      <div class="frame-line"><span>because</span><input id="calm-b" aria-label="because" placeholder="I see a long question"></div>
+      <div class="frame-line"><span>One thing I can do is</span><input id="calm-c" aria-label="One thing I can do is" placeholder="breathe and break it down"></div>
+    </div>
+    <div class="box">
+      <h4>Supports every student can have</h4>
+      <ul>
+        <li>Extra time</li>
+        <li>A quiet space</li>
+        <li>Breaks for water, a stretch, or the washroom</li>
+        <li>Headphones with the read-aloud tool</li>
+        <li>White noise or calming music</li>
+      </ul>
+      <p class="small muted">Talk to your teacher before test day about what helps you.</p>
+    </div>
+  </div>
+
+  <div class="st-foot"><button class="btn" type="button" data-prev>← Back</button><button class="btn primary" type="button" data-next>Next: Practice test →</button></div>
+</section>
+
+<!-- ============ 9 PRACTICE ============ -->
+<section class="station" id="practice" data-label="Practice test" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Station 9 of 10</p>
+    <h2>Practice test</h2>
+    <p class="lead" data-read>This practice test works like the real test. Stage 1 has 10 math questions about linear and non-linear relations. Stage 2 has 12 questions about digital test skills. Use paper first. Use the tools. Flag questions you want to check. Then review and submit.</p>
+    <div class="st-tools"><button class="listen" type="button"></button><span class="sel"><b>SEL</b> Healthy math identity · Perseverance</span></div>
+  </header>
+
+  <div id="pr-intro" class="cols">
+    <div class="box"><h4>Stage 1: Math</h4><p>10 questions on C4.1 and C4.4. Four are real EQAO released questions. Six are new questions in the same style.</p></div>
+    <div class="box"><h4>Stage 2: Test skills</h4><p>12 questions about your desk, the tools, key words, and staying calm.</p></div>
+    <div class="box"><h4>Remember</h4><ul><li>Get paper and a pencil.</li><li>Answer every question.</li><li>After you submit a stage, you cannot go back.</li></ul><button class="btn primary" type="button" id="pr-start">Start Stage 1</button></div>
+  </div>
+  <div id="pr-stage"></div>
+  <div id="pr-results" class="block"></div>
+
+  <div class="st-foot"><button class="btn" type="button" data-prev>← Back</button><button class="btn primary" type="button" data-next>Next: Tips for success →</button></div>
+</section>
+
+<!-- ============ 10 TIPS ============ -->
+<section class="station" id="tips" data-label="Tips for success" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Station 10 of 10</p>
+    <h2>Tips for success</h2>
+    <p class="lead" data-read>You have the skills. Here is a short list to remember. Read it again the day before the test.</p>
+    <div class="st-tools"><button class="listen" type="button"></button><span class="sel"><b>SEL</b> Developing a healthy mathematical identity</span></div>
+  </header>
+
+  <div class="tipgrid">
+    <div class="tipcol"><h4>Before the test</h4><ul>
+      <li>Sleep well and eat breakfast.</li>
+      <li>Charge your laptop. Bring headphones.</li>
+      <li>Set up your desk the way you practised.</li>
+      <li>Fold your paper into boxes and number them.</li>
+      <li>Find the anchor charts in the room.</li>
+      <li>Do box breathing before you press Start.</li>
+    </ul></div>
+    <div class="tipcol"><h4>During the test</h4><ul>
+      <li>Read every question two times, or listen to it.</li>
+      <li>Highlight the key words. Find the question.</li>
+      <li>Solve on paper first. Then click.</li>
+      <li>"Select the TWO" means choose exactly two.</li>
+      <li>Check your answer with Desmos or by working backwards.</li>
+      <li>Answer every question. A blank question gets no marks.</li>
+    </ul></div>
+    <div class="tipcol"><h4>When you are stuck</h4><ul>
+      <li>Choose your best answer and flag it.</li>
+      <li>Cross out choices that cannot be right.</li>
+      <li>Try another way: a table, a graph, or Desmos.</li>
+      <li>Look up at an anchor chart.</li>
+      <li>Breathe. Say: "I can't do this <b>yet</b>."</li>
+    </ul></div>
+    <div class="tipcol"><h4>Before you submit a stage</h4><ul>
+      <li>Open the review screen.</li>
+      <li>Go back to every flagged question.</li>
+      <li>Make sure there are no blank questions.</li>
+      <li>Check "Select the TWO" questions have two answers.</li>
+      <li>Then submit. You cannot go back after.</li>
+    </ul></div>
+  </div>
+
+  <div class="cols">
+    <div class="box">
+      <h4>My test-day plan</h4>
+      <p class="small muted">Write three things you will do.</p>
+      <div class="frame-line"><span>1.</span><input id="plan-1" aria-label="Plan item 1" placeholder="Paper first, then click"></div>
+      <div class="frame-line"><span>2.</span><input id="plan-2" aria-label="Plan item 2" placeholder="Flag and come back"></div>
+      <div class="frame-line"><span>3.</span><input id="plan-3" aria-label="Plan item 3" placeholder="Box breathing if I feel stuck"></div>
+    </div>
+    <div class="box">
+      <h4>I am a math learner who…</h4>
+      <div class="frame-line"><input id="ident-1" aria-label="I am a math learner who" placeholder="keeps trying when it is hard"></div>
+      <p class="small muted">Think of one strength you showed today.</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Check out: how do you feel now?</h3>
+    <div class="feel" id="feel-out" data-key="feelOut"></div>
+    <p class="fb" id="feel-compare" aria-live="polite"></p>
+  </div>
+
+  <div class="st-foot"><button class="btn" type="button" data-prev>← Back</button><button class="btn" type="button" data-goto="teacher">Teacher notes →</button></div>
+</section>
+
+<!-- ============ TEACHER ============ -->
+<section class="station" id="teacher" data-label="Teacher notes" hidden>
+  <header class="st-head">
+    <p class="eyebrow">For the teacher</p>
+    <h2>Teacher notes</h2>
+    <p class="lead">This module supports English language learners in MTH1W as they prepare for the EQAO Grade 9 Assessment of Mathematics. It uses the C4 Characteristics of Relations unit (C4.1, C4.4) as the math context and teaches the AA1 social-emotional learning skills explicitly.</p>
+  </header>
+
+  <div class="block">
+    <h3>Curriculum connections</h3>
+    <div class="quote"><p><b>C4.1 Characteristics of Linear and Non-Linear Relations:</b> compare characteristics of graphs, tables of values, and equations of linear and non-linear relations</p></div>
+    <div class="quote"><p><b>C4.4 Characteristics of Linear and Non-Linear Relations:</b> determine the equations of lines from graphs, tables of values, and concrete representations of linear relations by making connections between rates of change and slopes, and between initial values and y-intercepts, and use these equations to solve problems</p></div>
+    <div class="quote"><p><b>AA1 Social-Emotional Learning Skills:</b> develop and explore a variety of social-emotional learning skills in a context that supports and reflects this learning in connection with the expectations across all other strands</p></div>
+    <p class="small muted">AA1 is taught but not assessed, evaluated, or reported. EQAO does not measure the SEL strand.</p>
+  </div>
+
+  <div class="block">
+    <h3>Where each SEL skill is taught</h3>
+    <div class="tblwrap"><table class="tt">
+      <thead><tr><th>SEL skill (MTH1W)</th><th>Station</th><th>What students do</th></tr></thead>
+      <tbody>
+        <tr><td>Recognizing and identifying emotions</td><td>1, 8, 10</td><td>Feelings check-in with intensity scale; "I'm feeling… because…" frame; check-out comparison.</td></tr>
+        <tr><td>Recognizing sources of stress</td><td>2, 7, 8</td><td>Reduce uncertainty: allowed items, desk routine, test structure, box breathing, stress-to-strategy cards.</td></tr>
+        <tr><td>Identifying resources and supports that aid perseverance</td><td>4, 5, 8</td><td>Anchor charts, Desmos as a checking tool, supports available to all students.</td></tr>
+        <tr><td>Building healthy relationships and communicating effectively</td><td>3</td><td>Partner talk with sentence frames about whiteboard work.</td></tr>
+        <tr><td>Developing a healthy mathematical identity</td><td>8, 9, 10</td><td>Self-talk reframes, results framed as "Not yet", "I am a math learner who…".</td></tr>
+        <tr><td>Developing critical and creative mathematical thinking</td><td>5, 6</td><td>Decoding questions, predicting, checking with multiple representations.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cols">
+    <div class="box">
+      <h4>Suggested flow (two 75-minute periods)</h4>
+      <ol>
+        <li><b>Day 1:</b> Stations 1–4 together. Model the whiteboard routine; students solve the "Your turn" on vertical whiteboards in pairs.</li>
+        <li><b>Day 1:</b> Station 5 in Desmos on laptops.</li>
+        <li><b>Day 2:</b> Stations 6–8, then Station 9 under test-like conditions (paper, headphones, quiet).</li>
+        <li><b>Day 2:</b> Debrief Stage 1 results using the provincial data below; finish with Station 10.</li>
+      </ol>
+    </div>
+    <div class="box">
+      <h4>Released questions used</h4>
+      <ul>
+        <li>Nov 2025 #13 (C4, KU). Correct: B. Level 3: 75% correct. Level 1: 35% chose C, the decreasing linear table.</li>
+        <li>Nov 2025 #14 (C4, AP). Correct: B. Level 2: 80% correct; Level 1: 25% chose A (sign error on b).</li>
+        <li>Nov 2024 #13 (C4, KU), graphs redrawn for practice. Level 3: 68% correct; Level 1: 18%.</li>
+        <li>Nov 2024 #14 (C4, AP). Correct: C. Level 2: 32% chose B (80 min, likely the time remaining after 40 min).</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>ELL supports built in</h4>
+      <ul>
+        <li>Short sentences and a read-aloud button on every station (uses the device's voice).</li>
+        <li>Tap-to-define key words and a word wall with a space for students' first language.</li>
+        <li>Sentence frames for talk and reflection.</li>
+        <li>Student notes and answers are saved only in each student's browser. Nothing is sent to you.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Notes on test rules</h3>
+    <ul class="rules">
+      <li>Structure, flagging, and "cannot return after submitting a stage" come from EQAO's administration script.</li>
+      <li>Permitted items (paper, pencil, ruler, headphones, scientific or graphing calculator, printed Formula Sheet and glossaries, graphing applications students use regularly) and supports for all students (additional time, quiet setting, breaks) come from the EQAO knowledge base.</li>
+      <li>EQAO states that applications containing a glossary are not permitted and that classroom displays do not need to be altered for the assessment. Confirm phone and device rules with your school's administration.</li>
+      <li>The mock test screen is an approximation built for practice. Have students also try EQAO's official sample test.</li>
+    </ul>
+    <p class="small">Sources: <a href="https://eqao-kb-g9.lswp.vretta.com/knowledge-base/scripts/grade-9-assessment-of-mathematics-script" target="_blank" rel="noopener">EQAO Grade 9 administration script</a> · <a href="https://eqaokb-g9.lswp.vretta.com/?p=5170" target="_blank" rel="noopener">EQAO supports for all students</a> · <a href="https://www.eqao.com/the-assessments/grade-9-math/" target="_blank" rel="noopener">EQAO Grade 9 Assessment of Mathematics</a> · EQAO Released Questions with Provincial Data (November 2024, November 2025) · The Ontario Curriculum, Grade 9 Mathematics (2021)</p>
+  </div>
+
+  <div class="st-foot"><button class="btn" type="button" data-goto="tips">← Tips for success</button><button class="btn" type="button" data-goto="welcome">Back to the start</button></div>
+</section>
+
+  </main>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* ---------------- helpers ---------------- */
+const $=(s,el=document)=>el.querySelector(s);
+const $$=(s,el=document)=>Array.from(el.querySelectorAll(s));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const store={
+  get(k,d){try{const v=localStorage.getItem("eqaoReady."+k);return v==null?d:JSON.parse(v)}catch(e){return d}},
+  set(k,v){try{localStorage.setItem("eqaoReady."+k,JSON.stringify(v))}catch(e){}}
+};
+let toastT;
+function toast(msg){let t=$(".toast");if(!t){t=document.createElement("div");t.className="toast";t.setAttribute("role","status");document.body.appendChild(t)}
+  t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true},3200)}
+function speakable(s){return s.replace(/−/g," minus ").replace(/²/g," squared ").replace(/×/g," times ").replace(/÷/g," divided by ").replace(/~/g," approximately ").replace(/\s+/g," ")}
+function say(text){
+  try{
+    if(!("speechSynthesis" in window)){toast("Read-aloud is not available on this device.");return}
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(speakable(text));u.lang="en-CA";u.rate=.9;speechSynthesis.speak(u);
+  }catch(e){toast("Read-aloud is not available on this device.")}
+}
+const SV=p=>`<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const I={
+  speaker:SV('<path d="M3 7h3l4-3v10l-4-3H3z"/><path d="M13 6.5a4 4 0 0 1 0 5"/><path d="M15 4.5a7 7 0 0 1 0 9"/>'),
+  zoomIn:SV('<circle cx="8" cy="8" r="5"/><path d="M12 12l4 4M8 6v4M6 8h4"/>'),
+  zoomOut:SV('<circle cx="8" cy="8" r="5"/><path d="M12 12l4 4M6 8h4"/>'),
+  reader:SV('<rect x="2" y="7" width="14" height="4" rx="1"/><path d="M2 3h14M2 15h14"/>'),
+  marker:SV('<path d="M4 13l3 1.5 8-8-3-3-8 8z"/><path d="M3 16h7"/>'),
+  calc:SV('<rect x="4" y="2" width="10" height="14" rx="1.5"/><path d="M6.5 5h5M6.5 9h.01M9 9h.01M11.5 9h.01M6.5 12h.01M9 12h.01M11.5 12h.01"/>'),
+  docs:SV('<path d="M5 2h6l3 3v11H5z"/><path d="M11 2v3h3M7 9h5M7 12h5"/>'),
+  flag:SV('<path d="M4 16V3M4 3h9l-2 3 2 3H4"/>')
+};
+
+/* ---------------- plot (SVG grapher) ---------------- */
+let plotN=0;
+function plot(o){
+  const xmin=o.xmin??-2,xmax=o.xmax??8,ymin=o.ymin??-2,ymax=o.ymax??8;
+  const W=o.size||240,H=o.h||W,pad=o.pad??22;
+  const xs=o.xstep||1,ys=o.ystep||1,xl=o.xlab||2,yl=o.ylab||2,labels=o.labels!==false;
+  const X=x=>pad+(x-xmin)/(xmax-xmin)*(W-2*pad);
+  const Y=y=>H-pad-(y-ymin)/(ymax-ymin)*(H-2*pad);
+  const id="clp"+(++plotN);
+  const f=n=>Math.round(n*100)/100;
+  let s=`<svg class="plot" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.title||"Graph")}"><defs><clipPath id="${id}"><rect x="${X(xmin)}" y="${Y(ymax)}" width="${X(xmax)-X(xmin)}" height="${Y(ymin)-Y(ymax)}"/></clipPath></defs>`;
+  for(let x=Math.ceil(xmin/xs)*xs;x<=xmax+1e-9;x+=xs)s+=`<line class="g-grid" x1="${f(X(x))}" y1="${f(Y(ymin))}" x2="${f(X(x))}" y2="${f(Y(ymax))}"/>`;
+  for(let y=Math.ceil(ymin/ys)*ys;y<=ymax+1e-9;y+=ys)s+=`<line class="g-grid" x1="${f(X(xmin))}" y1="${f(Y(y))}" x2="${f(X(xmax))}" y2="${f(Y(y))}"/>`;
+  const ax0=ymin<=0&&ymax>=0, ay0=xmin<=0&&xmax>=0;
+  if(ax0)s+=`<line class="g-axis" x1="${X(xmin)}" y1="${f(Y(0))}" x2="${X(xmax)}" y2="${f(Y(0))}"/>`;
+  if(ay0)s+=`<line class="g-axis" x1="${f(X(0))}" y1="${Y(ymin)}" x2="${f(X(0))}" y2="${Y(ymax)}"/>`;
+  if(labels){
+    const ly=ax0?Y(0)+13:Y(ymin)+13, lx=ay0?X(0)-5:X(xmin)-5;
+    for(let x=Math.ceil(xmin/xl)*xl;x<=xmax+1e-9;x+=xl){if(Math.abs(x)<1e-9)continue;s+=`<text class="g-txt" x="${f(X(x))}" y="${f(ly)}" text-anchor="middle">${String(x).replace("-","−")}</text>`}
+    for(let y=Math.ceil(ymin/yl)*yl;y<=ymax+1e-9;y+=yl){if(Math.abs(y)<1e-9)continue;s+=`<text class="g-txt" x="${f(lx)}" y="${f(Y(y)+3.5)}" text-anchor="end">${String(y).replace("-","−")}</text>`}
+    if(ax0&&ay0)s+=`<text class="g-txt" x="${f(X(0)-5)}" y="${f(Y(0)+13)}" text-anchor="end">0</text>`;
+    if(ax0)s+=`<text class="g-ptl" x="${W-pad+8}" y="${f(Y(0)+4)}">${esc(o.xname||"x")}</text>`;
+    if(ay0)s+=`<text class="g-ptl" x="${f(X(0))}" y="${pad-8}" text-anchor="middle">${esc(o.yname||"y")}</text>`;
+  }
+  (o.lines||[]).forEach(L=>{s+=`<line clip-path="url(#${id})" class="g-line ${L.cls||""}" x1="${X(xmin)}" y1="${f(Y(L.m*xmin+L.b))}" x2="${X(xmax)}" y2="${f(Y(L.m*xmax+L.b))}"/>`});
+  (o.curves||[]).forEach(C=>{let p=[];for(let i=0;i<=80;i++){const x=xmin+(xmax-xmin)*i/80;p.push(f(X(x))+","+f(Y(C.fn(x))))}s+=`<polyline clip-path="url(#${id})" class="g-line ${C.cls||""}" points="${p.join(" ")}"/>`});
+  (o.pts||[]).forEach(P=>{s+=`<circle class="g-pt" cx="${f(X(P.x))}" cy="${f(Y(P.y))}" r="4"/>`;if(P.label)s+=`<text class="g-ptl" x="${f(X(P.x)+7)}" y="${f(Y(P.y)-7)}">${esc(P.label)}</text>`});
+  return s+"</svg>";
+}
+const TB=(h,rows,cls="")=>`<div class="tblwrap"><table class="vt ${cls}"><thead><tr>${h.map(x=>`<th scope="col">${x}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+
+/* ---------------- question banks ---------------- */
+const NEW="Practice question written for this module";
+const STAGE1=[
+ {id:"m1",type:"mc",src:"EQAO released question · November 2025 · #13",short:"Find the non-linear relation",
+  stem:"Three of these options show information about a linear relationship between T and g. Select the relationship that is non-linear.",
+  opts:[{id:"A",html:"T = 2g + 3"},{id:"B",html:TB(["g","T"],[[0,1],[1,2],[2,4],[3,8]],"sm")},{id:"C",html:TB(["g","T"],[[0,7],[1,5],[2,3],[3,1]],"sm")},{id:"D",html:"T = 12 − 4g"}],
+  answer:"B",answerText:"B, the table 1, 2, 4, 8",
+  explain:"In table B, T goes 1, 2, 4, 8. The first differences are +1, +2, +4. They are not the same, so B is non-linear. Table C goes down by 2 every time. That is a constant change, so C is linear. Equations A and D have x with no exponent, so they are linear.",
+  tip:"In Ontario, 35% of Level 1 students chose C. Going down by the same amount each time is still linear. \"Non-linear\" means find the one that is different."},
+ {id:"m2",type:"mc",src:"EQAO released question · November 2025 · #14",short:"Change the slope and y-intercept",
+  stem:"A line is represented by the equation y = 6x. The slope doubles, and the y-intercept decreases by 5. What is the equation of the new line?",
+  opts:[{id:"A",html:"y = 12x + 5"},{id:"B",html:"y = 12x − 5"},{id:"C",html:"y = 8x + 5"},{id:"D",html:"y = 8x − 5"}],
+  answer:"B",answerText:"B: y = 12x − 5",
+  explain:"y = 6x has a slope of 6 and a y-intercept of 0. The slope doubles: 6 × 2 = 12. The y-intercept decreases by 5: 0 − 5 = −5. The new line is y = 12x − 5.",
+  tip:"\"Doubles\" means × 2, not + 2. \"Decreases by\" means subtract."},
+ {id:"m3",type:"mc",layout:"grid",src:"Adapted from EQAO released question · November 2024 · #13 (graphs redrawn)",short:"Match slope and y-intercept to a graph",
+  stem:"Which line has a slope of −4/5 and a y-intercept of 6?",
+  opts:[{id:"A",html:plot({size:180,lines:[{m:.8,b:6}],title:"Graph A"})},{id:"B",html:plot({size:180,lines:[{m:-1.25,b:6}],title:"Graph B"})},{id:"C",html:plot({size:180,lines:[{m:-.8,b:6}],title:"Graph C"})},{id:"D",html:plot({size:180,lines:[{m:-.8,b:4.8}],title:"Graph D"})}],
+  answer:"C",answerText:"C",
+  explain:"The y-intercept is 6, so the line crosses the y-axis at 6. That rules out D, which crosses the x-axis at 6. The slope is negative, so the line goes down from left to right. That rules out A. A slope of −4/5 means down 4, right 5: from (0, 6) to (5, 2). That is graph C. Graph B goes down 5, right 4.",
+  tip:"Check one thing at a time: first the y-intercept, then up or down, then the exact slope."},
+ {id:"m4",type:"mc",src:"EQAO released question · November 2024 · #14",short:"Use a table to find when the pool is empty",
+  stem:"This table shows information about the relationship between the amount of water in a pool, in litres, and time, in minutes. The pool is being emptied at a constant rate. What is the total time required to empty the pool?",
+  media:TB(["Time (min)","Amount of water in the pool (L)"],[[0,"60 000"],[10,"55 000"],[20,"50 000"],[40,"40 000"]]),
+  opts:[{id:"A",html:"60 min"},{id:"B",html:"80 min"},{id:"C",html:"120 min"},{id:"D",html:"200 min"}],
+  answer:"C",answerText:"C: 120 min",
+  explain:"Every 10 minutes, the water goes down by 5000 L. That is 500 L per minute. \"Empty\" means 0 L. 60 000 ÷ 500 = 120 minutes. Be careful: the table jumps from 20 to 40 minutes.",
+  tip:"80 min is a common mistake. That is the time left after 40 minutes, not the total time. You can check in Desmos: graph y = 60000 − 500x and find where it crosses the x-axis."},
+ {id:"m5",type:"mc",src:NEW,short:"Write an equation from a table",
+  stem:"Which equation represents the relationship in this table of values?",
+  media:TB(["x","y"],[[0,3],[1,7],[2,11],[3,15],[4,19]],"sm"),
+  opts:[{id:"A",html:"y = 3x + 4"},{id:"B",html:"y = x + 4"},{id:"C",html:"y = 7x"},{id:"D",html:"y = 4x + 3"}],
+  answer:"D",answerText:"D: y = 4x + 3",
+  explain:"The y-values go up by 4 each time x goes up by 1, so the rate of change (slope) is 4. When x = 0, y = 3, so the initial value (y-intercept) is 3. The equation is y = 4x + 3.",
+  tip:"Look for the row where x = 0. That row gives you b."},
+ {id:"m6",type:"multi",pick:2,src:NEW,short:"Select the TWO linear relations",
+  stem:"Select the TWO relations that are linear.",
+  opts:[{id:"A",html:"y = x<sup>2</sup> + 1"},{id:"B",html:"y = −3x + 2"},{id:"C",html:TB(["x","y"],[[0,10],[1,8],[2,6],[3,4]],"sm")},{id:"D",html:"y = 2<sup>x</sup>"}],
+  answer:["B","C"],answerText:"B and C",
+  explain:"B is linear because x has no exponent. C is linear because y goes down by 2 every time. A has x², and D has x as an exponent, so they are non-linear.",
+  tip:"\"Select the TWO\" means you must choose exactly two answers. One correct answer is only part marks."},
+ {id:"m7",type:"dd",src:NEW,short:"Find the slope and y-intercept from a graph",
+  stem:"The graph of a line is shown. Complete the statement.",
+  media:`<div style="max-width:300px">${plot({size:280,xmin:-2,xmax:6,ymin:-4,ymax:8,lines:[{m:2,b:-2}],pts:[{x:0,y:-2,label:"(0, −2)"},{x:3,y:4,label:"(3, 4)"}],title:"Line through (0, −2) and (3, 4)"})}</div>`,
+  parts:["The slope of this line is ",{opts:["1/2","2","3","6"]}," and the y-intercept is ",{opts:["−2","0","2","4"]},"."],
+  answer:["2","−2"],answerText:"slope 2, y-intercept −2",
+  explain:"From (0, −2) to (3, 4): the rise is 4 − (−2) = 6 and the run is 3 − 0 = 3. Slope = 6 ÷ 3 = 2. The line crosses the y-axis at −2.",
+  tip:"Rise first, then run. Slope = rise ÷ run."},
+ {id:"m8",type:"sort",src:NEW,short:"Sort linear and non-linear relations",
+  stem:"Drag each relation into the correct box.",bins:["Linear","Non-linear"],
+  items:[{id:"a",html:"y = 5 − 2x",bin:"Linear"},{id:"b",html:"y = x<sup>2</sup>",bin:"Non-linear"},{id:"c",html:TB(["x","y"],[[0,1],[1,4],[2,7],[3,10]],"xs"),bin:"Linear"},{id:"d",html:TB(["x","y"],[[0,0],[1,1],[2,4],[3,9]],"xs"),bin:"Non-linear"}],
+  answerText:"Linear: y = 5 − 2x and the table 1, 4, 7, 10. Non-linear: y = x² and the table 0, 1, 4, 9.",
+  explain:"The table 1, 4, 7, 10 goes up by 3 every time, so it is linear. The table 0, 1, 4, 9 goes up by 1, 3, 5, so it is non-linear. y = 5 − 2x is linear. y = x² is non-linear.",
+  tip:"For tables, find the first differences. Same differences means linear."},
+ {id:"m9",type:"mc",src:NEW,short:"Write an equation from a situation",
+  stem:"A phone plan charges a one-time fee of $40 plus $15 per month. Which equation represents the total cost, C, in dollars, after n months?",
+  opts:[{id:"A",html:"C = 40n + 15"},{id:"B",html:"C = 55n"},{id:"C",html:"C = 15n + 40"},{id:"D",html:"C = 15n − 40"}],
+  answer:"C",answerText:"C: C = 15n + 40",
+  explain:"\"$15 per month\" is the rate of change, so the slope is 15. The \"one-time fee of $40\" is paid at the start, so it is the initial value, 40. C = 15n + 40.",
+  tip:"\"Per\" and \"each\" point to the slope. \"One-time\", \"starting\" and \"flat fee\" point to the initial value."},
+ {id:"m10",type:"mc",src:NEW,short:"Compare two lines",
+  stem:"Line P is represented by y = 3x + 1. Line Q passes through the points (0, 5) and (2, 11). Which statement is true?",
+  opts:[{id:"A",html:"Line P and Line Q are parallel."},{id:"B",html:"Line P and Line Q have the same y-intercept."},{id:"C",html:"Line Q is steeper than Line P."},{id:"D",html:"Line P and Line Q cross at (0, 5)."}],
+  answer:"A",answerText:"A: the lines are parallel",
+  explain:"Line Q: slope = (11 − 5) ÷ (2 − 0) = 6 ÷ 2 = 3. Its y-intercept is 5. Line P has slope 3 and y-intercept 1. Same slope and different y-intercepts, so the lines are parallel.",
+  tip:"Parallel lines have the same slope. Find the slope of Line Q before you read the choices."}
+];
+const STAGE2=[
+ {id:"s1",type:"mc",src:"Test skill: flagging",short:"What to do when you are stuck",
+  stem:"You read a question two times and you still do not know how to start. What is the best thing to do?",
+  opts:[{id:"A",html:"Leave it blank and never come back."},{id:"B",html:"Ask your teacher to explain the math."},{id:"C",html:"Choose your best answer, flag it, and move on."},{id:"D",html:"Stop the test and start again."}],
+  answer:"C",answerText:"C",explain:"The flag helps you find the question later. Choose an answer first so it is not blank if time runs out. Your teacher can help with the computer, not the math.",tip:"Answer, flag, move on, come back."},
+ {id:"s2",type:"multi",pick:2,src:"Test skill: desk set-up",short:"Allowed items",
+  stem:"Select the TWO items that are allowed on your desk during the EQAO math test.",
+  opts:[{id:"A",html:"Paper and a pencil for rough work"},{id:"B",html:"A translation app"},{id:"C",html:"A scientific or graphing calculator"},{id:"D",html:"Your own page of notes and formulas"}],
+  answer:["A","C"],answerText:"A and C",explain:"Paper, a pencil, and a calculator are allowed. Apps with a glossary, like a translation app, are not allowed. Your own notes are not allowed. You can use the EQAO Formula Sheet.",tip:"Set up your desk the same way every time you practise."},
+ {id:"s3",type:"mc",src:"Test skill: question words",short:"\"Select the TWO\"",
+  stem:"A question says \"Select the TWO…\". What must you do?",
+  opts:[{id:"A",html:"Choose the one best answer."},{id:"B",html:"Choose exactly two answers."},{id:"C",html:"Choose every answer that might be right."},{id:"D",html:"Answer two different questions."}],
+  answer:"B",answerText:"B",explain:"Choose exactly two answers. Square boxes beside the answers are a clue that you can choose more than one.",tip:"Before you submit, check that these questions have two answers."},
+ {id:"s4",type:"mc",src:"Test skill: submitting a stage",short:"After you submit a stage",
+  stem:"You finish Stage 1 and click Submit. Then you remember a question you wanted to fix. What happens?",
+  opts:[{id:"A",html:"You can go back any time."},{id:"B",html:"Your teacher can unlock it for you."},{id:"C",html:"The test fixes it for you."},{id:"D",html:"You cannot go back to Stage 1."}],
+  answer:"D",answerText:"D",explain:"Once you submit a stage, you cannot return to it. Use the review screen to check flagged and blank questions before you submit.",tip:"Review first. Submit last."},
+ {id:"s5",type:"sort",src:"Test skill: asking for help",short:"What your teacher can help with",
+  stem:"During the test, your teacher can only help with the computer platform. Drag each question into the correct box.",
+  bins:["Teacher can help","Teacher cannot help"],
+  items:[{id:"a",html:"\"The zoom tool is not working.\"",bin:"Teacher can help"},{id:"b",html:"\"What does slope mean?\"",bin:"Teacher cannot help"},{id:"c",html:"\"My headphones have no sound.\"",bin:"Teacher can help"},{id:"d",html:"\"Is my answer right?\"",bin:"Teacher cannot help"}],
+  answerText:"Can help: zoom tool, headphones. Cannot help: slope, checking your answer.",explain:"Your teacher can help with the screen, the tools, and your equipment. During the test, your teacher cannot explain math words or check answers.",tip:"Learn the key words before test day, so you do not need to ask."},
+ {id:"s6",type:"dd",src:"Test skill: key words",short:"Key words to math actions",
+  stem:"Complete the statements about key words.",
+  parts:["\"The y-intercept decreases by 5\" means ",{opts:["add 5","subtract 5","multiply by 5","divide by 5"]},". \"The slope doubles\" means ",{opts:["+ 2","× 2","÷ 2","− 2"]},"."],
+  answer:["subtract 5","× 2"],answerText:"subtract 5; × 2",explain:"\"Decreases by\" means subtract. \"Doubles\" means multiply by 2. \"Triples\" means multiply by 3.",tip:"Write the math action above the key word on your paper."},
+ {id:"s7",type:"mc",src:"Test skill: paper first",short:"Why solve on paper first",
+  stem:"Why should you solve on paper first, before you click an answer?",
+  opts:[{id:"A",html:"Writing your steps helps you catch mistakes before you choose."},{id:"B",html:"EQAO marks your paper."},{id:"C",html:"You must hand in paper to get marks."},{id:"D",html:"It is faster to skip steps."}],
+  answer:"A",answerText:"A",explain:"Your paper is collected and destroyed after each session. It is not marked. It helps you think, so the answer you click is correct.",tip:"Solve, check, then click."},
+ {id:"s8",type:"mc",src:"Test skill: Desmos",short:"Use Desmos to check a table",
+  stem:"You want to know if a table of values is linear. Which Desmos move helps most?",
+  opts:[{id:"A",html:"Type a random equation and hope it fits."},{id:"B",html:"Zoom out until the points disappear."},{id:"C",html:"Make a table in Desmos and see if the points make a straight line."},{id:"D",html:"Desmos cannot work with tables."}],
+  answer:"C",answerText:"C",explain:"Press + and choose table. Type the values. If the points line up in a straight line, the relation is linear. You can also check the first differences on paper.",tip:"Use Desmos to check your work, not to replace it."},
+ {id:"s9",type:"mc",src:"Test skill: anchor charts",short:"When you forget a word",
+  stem:"During the test, you forget what \"initial value\" means. What can you do?",
+  opts:[{id:"A",html:"Ask the student beside you."},{id:"B",html:"Look up at the anchor chart for y = mx + b on our wall."},{id:"C",html:"Use a translation app."},{id:"D",html:"Skip every question with that word."}],
+  answer:"B",answerText:"B",explain:"The anchor charts stay on the wall during the test. The y = mx + b chart shows that b is the y-intercept, which is the initial value. Talking to other students and translation apps are not allowed.",tip:"Know where each chart is before test day."},
+ {id:"s10",type:"mc",src:"Test skill: test tools",short:"The line reader tool",
+  stem:"Which tool on the test screen helps you read one line at a time?",
+  opts:[{id:"A",html:"Highlighter"},{id:"B",html:"Calculator"},{id:"C",html:"Flag"},{id:"D",html:"Line reader"}],
+  answer:"D",answerText:"D",explain:"The line reader darkens the rest of the screen so you can focus on one line. The highlighter marks key words. The flag marks a question to come back to.",tip:"Try every tool in the practice screen before test day."},
+ {id:"s11",type:"mc",src:"Test skill: staying calm",short:"When your mind goes blank",
+  stem:"During the test, your heart beats fast and your mind goes blank. What is a good first step?",
+  opts:[{id:"A",html:"Take a few slow breaths, then read the question again."},{id:"B",html:"Click answers fast to finish."},{id:"C",html:"Tell yourself \"I am bad at math.\""},{id:"D",html:"Stop answering for the rest of the session."}],
+  answer:"A",answerText:"A",explain:"Slow breathing calms your body. Then your brain can think again. Box breathing takes about one minute.",tip:"Breathe in 4, hold 4, out 4, hold 4."},
+ {id:"s12",type:"mc",src:"Test skill: key words",short:"The word \"empty\"",
+  stem:"A question asks: \"What is the total time required to empty the pool?\" Which word tells you the amount of water at the end?",
+  opts:[{id:"A",html:"total"},{id:"B",html:"time"},{id:"C",html:"empty"},{id:"D",html:"pool"}],
+  answer:"C",answerText:"C: empty",explain:"\"Empty\" means 0 L of water is left. So you need to find the time when the amount of water is 0.",tip:"Some key words hide a number. Empty = 0. Doubles = × 2. Half = ÷ 2."}
+];
+
+/* ---------------- grading ---------------- */
+function isAnswered(q,a){
+  if(a==null)return false;
+  if(q.type==="mc")return !!a;
+  if(q.type==="multi")return a.length===q.pick;
+  if(q.type==="dd")return q.parts.filter(p=>typeof p!=="string").every((_,k)=>!!a[k]);
+  if(q.type==="sort")return q.items.every(it=>a[it.id]);
+  return false;
+}
+function isCorrect(q,a){
+  if(a==null)return false;
+  if(q.type==="mc")return a===q.answer;
+  if(q.type==="multi")return a.length===q.answer.length&&q.answer.every(x=>a.includes(x));
+  if(q.type==="dd")return q.answer.every((v,k)=>a[k]===v);
+  if(q.type==="sort")return q.items.every(it=>a[it.id]===it.bin);
+  return false;
+}
+function answerTextOf(q,a){
+  if(!isAnswered(q,a)&&q.type!=="multi"&&q.type!=="sort"&&q.type!=="dd")return "No answer";
+  if(q.type==="mc")return a||"No answer";
+  if(q.type==="multi")return a&&a.length?a.slice().sort().join(" and "):"No answer";
+  if(q.type==="dd")return a&&a.some(Boolean)?a.map(x=>x||"blank").join("; "):"No answer";
+  if(q.type==="sort"){if(!a)return "No answer";const n=q.items.filter(it=>a[it.id]===it.bin).length;return `${n} of ${q.items.length} cards in the right box`}
+  return "";
+}
+
+/* ---------------- mock test engine ---------------- */
+function makeTest(root,cfg){
+  const qs=cfg.questions,uid=root.id;
+  const st={i:0,ans:{},flags:new Set(),zoom:1,reader:false,hl:false,marks:{},panel:null,t0:Date.now(),done:false,sel:null,spot:null};
+  const tb=(k,label,icon,iconOnly,tour)=>`<button type="button" class="tool${iconOnly?" ic":""}" data-tool="${k}" ${tour?`data-tour="${k}"`:""} aria-label="${label}" title="${label}" ${["reader","hl","calc","docs"].includes(k)?'aria-pressed="false"':""}>${icon}<span>${label}</span></button>`;
+  root.classList.add("tx");
+  root.innerHTML=`
+   <div class="tx-top">
+     <div class="tx-where" data-tour="where"><span class="tx-session">${esc(cfg.session)}</span><span class="tx-stage">${esc(cfg.stage)}</span></div>
+     <div class="tx-tools" role="toolbar" aria-label="Test tools">
+       ${tb("tts","Read aloud",I.speaker,false,true)}
+       <span class="tx-zoom" data-tour="zoom">${tb("zout","Zoom out",I.zoomOut,true)}${tb("zin","Zoom in",I.zoomIn,true)}</span>
+       ${tb("reader","Line reader",I.reader,false,true)}
+       ${tb("hl","Highlighter",I.marker,false,true)}
+       ${tb("calc","Calculator",I.calc,false,true)}
+       ${tb("docs","Documents",I.docs,false,true)}
+     </div>
+   </div>
+   <div class="tx-nav" data-tour="nav" role="group" aria-label="Question numbers"></div>
+   <div class="tx-body">
+     <div class="tx-q" data-tour="question">
+       <div class="tx-qhead"><span class="tx-qnum"></span><span class="tx-src"></span></div>
+       <div class="tx-stem"></div>
+       <div class="tx-media"></div>
+       <div class="tx-resp"></div>
+       <div class="rd rd-top" hidden></div><div class="rd rd-band" hidden></div><div class="rd rd-bot" hidden></div>
+     </div>
+     <aside class="tx-panel" hidden></aside>
+   </div>
+   <div class="tx-foot">
+     <span data-tour="prevnext" style="display:inline-flex;gap:8px"><button type="button" class="tbtn" data-act="prev">← Previous</button><button type="button" class="tbtn" data-act="next">Next →</button></span>
+     <button type="button" class="tbtn tx-flag" data-act="flag" data-tour="flag" aria-pressed="false">${I.flag}<span>Flag</span></button>
+     <span class="tx-time"></span>
+     <button type="button" class="tbtn primary" data-act="review" data-tour="review">Review and submit</button>
+   </div>
+   <div class="tx-review" hidden></div>`;
+  const qEl=$(".tx-q",root),navEl=$(".tx-nav",root),panel=$(".tx-panel",root),body=$(".tx-body",root),rv=$(".tx-review",root);
+  const rdTop=$(".rd-top",root),rdBand=$(".rd-band",root),rdBot=$(".rd-bot",root);
+
+  function renderNav(){
+    navEl.innerHTML=qs.map((q,k)=>`<button type="button" data-go="${k}" class="${isAnswered(q,st.ans[q.id])?"ans":""} ${st.flags.has(q.id)?"flg":""} ${k===st.i?"cur":""}" aria-label="Question ${k+1}${isAnswered(q,st.ans[q.id])?", answered":""}${st.flags.has(q.id)?", flagged":""}" ${k===st.i?'aria-current="true"':""}>${k+1}</button>`).join("");
+  }
+  function chip(it,sel){return `<button type="button" class="chip${sel?" sel":""}" draggable="true" data-item="${it.id}">${it.html}</button>`}
+  function renderResp(q){
+    const a=st.ans[q.id];
+    if(q.type==="mc"||q.type==="multi"){
+      const multi=q.type==="multi";
+      let h=`<div class="opts${q.layout==="grid"?" grid":""}" role="${multi?"group":"radiogroup"}" aria-label="Answer choices">`+
+        q.opts.map(o=>{const on=multi?(a||[]).includes(o.id):a===o.id;return `<button type="button" class="opt" data-opt="${o.id}" role="${multi?"checkbox":"radio"}" aria-checked="${on}"><span class="opt-l">${o.id}</span><span class="opt-c">${o.html}</span></button>`}).join("")+"</div>";
+      if(multi)h+=`<p class="pick-note" aria-live="polite">Select ${q.pick===2?"TWO":q.pick} answers. Selected: ${(a||[]).length} of ${q.pick}.</p>`;
+      return h;
+    }
+    if(q.type==="dd"){
+      let bi=-1;
+      return `<p class="dd-line">`+q.parts.map(p=>{if(typeof p==="string")return esc(p);bi++;const v=(a||[])[bi]||"";return `<select id="${uid}-${q.id}-${bi}" data-blank="${bi}" aria-label="Blank ${bi+1}"><option value="">Choose…</option>${p.opts.map(o=>`<option${o===v?" selected":""}>${esc(o)}</option>`).join("")}</select>`}).join("")+`</p>`;
+    }
+    if(q.type==="sort"){
+      const A=a||{};
+      return `<p class="pick-note">Tap a card, then tap a box. Or drag the card.</p><div class="sort"><div class="sort-pool" data-bin="">${q.items.filter(it=>!A[it.id]).map(it=>chip(it,st.sel===it.id)).join("")}</div><div class="sort-bins">${q.bins.map(b=>`<div class="bin" data-bin="${esc(b)}"><div class="bin-h">${esc(b)}</div><div class="bin-items">${q.items.filter(it=>A[it.id]===b).map(it=>chip(it,st.sel===it.id)).join("")}</div></div>`).join("")}</div></div>`;
+    }
+    return "";
+  }
+  function renderQ(){
+    const q=qs[st.i];
+    $(".tx-qnum",root).textContent=`Question ${st.i+1} of ${qs.length}`;
+    $(".tx-src",root).textContent=q.src||"";
+    const marks=st.marks[q.id]||new Set();
+    let k=-1;
+    $(".tx-stem",root).innerHTML=q.stem.split(/(\s+)/).map(w=>{if(/^\s+$/.test(w)||!w)return w;k++;return `<span class="w${marks.has(k)?" mk":""}" data-w="${k}">${esc(w)}</span>`}).join("");
+    $(".tx-media",root).innerHTML=q.media||"";
+    $(".tx-resp",root).innerHTML=renderResp(q);
+    const fb=$('[data-act="flag"]',root);fb.setAttribute("aria-pressed",st.flags.has(q.id));$("span",fb).textContent=st.flags.has(q.id)?"Flagged":"Flag";
+    $('[data-act="prev"]',root).disabled=st.i===0;$('[data-act="next"]',root).disabled=st.i===qs.length-1;
+    qEl.style.setProperty("--z",st.zoom);
+    renderNav();
+    if(st.reader)placeReader(lastY);
+  }
+  function setAns(v){st.ans[qs[st.i].id]=v;renderQ()}
+  /* line reader */
+  let lastY=70;
+  function placeReader(y){
+    lastY=y;const h=qEl.clientHeight;const bh=parseFloat(getComputedStyle(qEl).fontSize)*2.4;
+    const top=Math.max(0,Math.min(h-bh,y-bh/2));
+    rdTop.style.height=top+"px";rdBand.style.top=top+"px";rdBand.style.height=bh+"px";rdBot.style.top=(top+bh)+"px";
+  }
+  qEl.addEventListener("pointermove",e=>{if(!st.reader)return;const r=qEl.getBoundingClientRect();placeReader(e.clientY-r.top)});
+  qEl.addEventListener("pointerdown",e=>{if(!st.reader)return;const r=qEl.getBoundingClientRect();placeReader(e.clientY-r.top)});
+  /* panels */
+  function renderPanel(){
+    $$('[data-tool="calc"],[data-tool="docs"]',root).forEach(b=>b.setAttribute("aria-pressed",b.dataset.tool===st.panel));
+    if(!st.panel){panel.hidden=true;body.classList.remove("has-panel");return}
+    panel.hidden=false;body.classList.add("has-panel");
+    if(st.panel==="calc"){
+      const keys=["7","8","9","÷","4","5","6","×","1","2","3","−","0",".","(",")","C","⌫","+","="];
+      panel.innerHTML=`<div class="pn-h"><b>Calculator</b><button type="button" data-act="closepanel">Close</button></div>
+        <input class="calc-in" id="${uid}-calc" aria-label="Calculation" placeholder="60000 ÷ 500" autocomplete="off">
+        <div class="calc-keys">${keys.map(k=>`<button type="button" data-ck="${k}" class="${k==="="?"eqk":""}">${k}</button>`).join("")}</div>
+        <output class="calc-out" aria-live="polite"></output>`;
+    }else{
+      panel.innerHTML=`<div class="pn-h"><b>Documents</b><button type="button" data-act="closepanel">Close</button></div>
+        <div class="docs">
+          <p class="small muted">Practice reference made for this class. On the real test, Documents has the EQAO Formula Sheet and the English–French and French–English glossaries.</p>
+          <h5>Slope</h5><p>slope = rise ÷ run = (y₂ − y₁) ÷ (x₂ − x₁)</p>
+          <h5>Equation of a line</h5><p>y = mx + b<br>m = slope = rate of change<br>b = y-intercept = initial value</p>
+          <h5>Linear or non-linear?</h5><p>Same first differences → linear.<br>Different first differences → non-linear.</p>
+          <h5>Key words</h5><p>doubles × 2 · triples × 3 · half ÷ 2<br>increases by + · decreases by −<br>per / each → rate · empty → 0</p>
+        </div>`;
+    }
+  }
+  function calcEval(){
+    const inp=$(".calc-in",root),out=$(".calc-out",root);let e=inp.value.replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-").replace(/\s/g,"");
+    if(!e){out.textContent="";return}
+    if(!/^[0-9+\-*/().]+$/.test(e)){out.textContent="Use numbers and + − × ÷ only.";return}
+    try{const v=Function('"use strict";return ('+e+")")();out.textContent=Number.isFinite(v)?"= "+String(+v.toPrecision(10)).replace("-","−"):"Cannot divide by 0."}catch(err){out.textContent="Check the calculation."}
+  }
+  /* review */
+  function openReview(){
+    const nA=qs.filter(q=>isAnswered(q,st.ans[q.id])).length,nF=st.flags.size,nB=qs.length-nA;
+    rv.innerHTML=`<div class="rv"><h3>Review: ${esc(cfg.stage)}</h3><p>Check your flagged and unanswered questions before you submit.</p>
+      <div class="rv-sum"><span class="pill">Answered: ${nA}</span><span class="pill flag">Flagged: ${nF}</span><span class="pill blank">Not answered: ${nB}</span></div>
+      <ol class="rv-list">${qs.map((q,k)=>{const an=isAnswered(q,st.ans[q.id]);return `<li><button type="button" data-rgo="${k}">Question ${k+1}</button><span class="pill ${an?"":"blank"}">${an?"Answered":"Not answered"}</span>${st.flags.has(q.id)?'<span class="pill flag">Flagged</span>':""}</li>`}).join("")}</ol>
+      <div class="rv-actions"><button type="button" class="tbtn" data-ract="back">← Back to questions</button><button type="button" class="tbtn primary" data-ract="submit">Submit ${esc(cfg.stage)}</button></div>
+      <div class="rv-confirm" hidden><p><b>Are you sure?</b> After you submit, you cannot return to this stage.${nF?` You still have ${nF} flagged question${nF>1?"s":""}.`:""}${nB?` You have ${nB} question${nB>1?"s":""} with no answer.`:""}</p><div class="rv-actions"><button type="button" class="tbtn" data-ract="cancel">Cancel</button><button type="button" class="tbtn primary" data-ract="confirm">Yes, submit</button></div></div></div>`;
+    rv.hidden=false;$("h3",rv).setAttribute("tabindex","-1");$("h3",rv).focus();
+  }
+  /* events */
+  root.addEventListener("click",e=>{
+    const t=e.target;
+    const tool=t.closest("[data-tool]");
+    if(tool){const k=tool.dataset.tool;
+      if(k==="tts"){const q=qs[st.i];const tmp=document.createElement("div");tmp.innerHTML=(q.media||"");let txt=q.stem+" "+tmp.textContent+" ";
+        if(q.opts)q.opts.forEach(o=>{const d=document.createElement("div");d.innerHTML=o.html;txt+=` ${o.id}. ${d.textContent}.`});
+        if(q.parts)txt+=" "+q.parts.map(p=>typeof p==="string"?p:" blank ").join("");
+        if(q.items)txt+=" Cards: "+q.items.map(it=>{const d=document.createElement("div");d.innerHTML=it.html;return d.textContent}).join(". ");
+        say(txt)}
+      if(k==="zin"){st.zoom=Math.min(1.6,+(st.zoom+.15).toFixed(2));qEl.style.setProperty("--z",st.zoom);if(st.reader)placeReader(lastY)}
+      if(k==="zout"){st.zoom=Math.max(.85,+(st.zoom-.15).toFixed(2));qEl.style.setProperty("--z",st.zoom);if(st.reader)placeReader(lastY)}
+      if(k==="reader"){st.reader=!st.reader;tool.setAttribute("aria-pressed",st.reader);[rdTop,rdBand,rdBot].forEach(x=>x.hidden=!st.reader);if(st.reader){placeReader(70);toast("Move your mouse or finger over the question to move the reader.")}}
+      if(k==="hl"){st.hl=!st.hl;tool.setAttribute("aria-pressed",st.hl);root.classList.toggle("hl-on",st.hl);if(st.hl)toast("Highlighter on. Click words in the question.")}
+      if(k==="calc"||k==="docs"){st.panel=st.panel===k?null:k;renderPanel()}
+      return}
+    const go=t.closest("[data-go]");if(go){st.i=+go.dataset.go;st.sel=null;renderQ();return}
+    const act=t.closest("[data-act]");
+    if(act){const a=act.dataset.act;
+      if(a==="prev"&&st.i>0){st.i--;st.sel=null;renderQ()}
+      if(a==="next"&&st.i<qs.length-1){st.i++;st.sel=null;renderQ()}
+      if(a==="flag"){const id=qs[st.i].id;st.flags.has(id)?st.flags.delete(id):st.flags.add(id);renderQ()}
+      if(a==="review")openReview();
+      if(a==="closepanel"){st.panel=null;renderPanel()}
+      return}
+    const rg=t.closest("[data-rgo]");if(rg){st.i=+rg.dataset.rgo;rv.hidden=true;renderQ();return}
+    const ra=t.closest("[data-ract]");
+    if(ra){const a=ra.dataset.ract;
+      if(a==="back"){rv.hidden=true}
+      if(a==="submit"){$(".rv-confirm",rv).hidden=false}
+      if(a==="cancel"){$(".rv-confirm",rv).hidden=true}
+      if(a==="confirm"){
+        if(cfg.mode==="tour"){rv.hidden=true;toast("This is only the tour. Nothing was submitted.");return}
+        st.done=true;clearInterval(timer);
+        cfg.onSubmit&&cfg.onSubmit({questions:qs,answers:st.ans,flags:[...st.flags],seconds:Math.round((Date.now()-st.t0)/1000)});
+      }
+      return}
+    const ck=t.closest("[data-ck]");
+    if(ck){const inp=$(".calc-in",root),k=ck.dataset.ck;
+      if(k==="C"){inp.value="";$(".calc-out",root).textContent=""}else if(k==="⌫"){inp.value=inp.value.slice(0,-1)}else if(k==="="){calcEval()}else{inp.value+=k}
+      return}
+    const w=t.closest(".w");
+    if(w&&st.hl){const q=qs[st.i];const s=st.marks[q.id]||(st.marks[q.id]=new Set());const n=+w.dataset.w;s.has(n)?s.delete(n):s.add(n);w.classList.toggle("mk");return}
+    const q=qs[st.i];
+    const o=t.closest(".opt");
+    if(o){const id=o.dataset.opt;
+      if(q.type==="mc")setAns(id);
+      else{let a=(st.ans[q.id]||[]).slice();
+        if(a.includes(id))a=a.filter(x=>x!==id);
+        else if(a.length>=q.pick){const n=$(".pick-note",root);n.textContent=`You can choose only ${q.pick}. Unselect one first.`;n.classList.add("warn");return}
+        else a.push(id);
+        setAns(a)}
+      return}
+    const c=t.closest(".chip");
+    if(c){st.sel=st.sel===c.dataset.item?null:c.dataset.item;renderQ();return}
+    const bin=t.closest("[data-bin]");
+    if(bin&&st.sel){const A=Object.assign({},st.ans[q.id]||{});const b=bin.dataset.bin;if(b)A[st.sel]=b;else delete A[st.sel];st.sel=null;setAns(A);return}
+  });
+  root.addEventListener("change",e=>{const s=e.target.closest("select[data-blank]");if(!s)return;const q=qs[st.i];const n=q.parts.filter(p=>typeof p!=="string").length;const a=(st.ans[q.id]||new Array(n).fill("")).slice();a[+s.dataset.blank]=s.value;st.ans[q.id]=a;renderNav()});
+  root.addEventListener("keydown",e=>{if(e.target.classList.contains("calc-in")&&e.key==="Enter"){e.preventDefault();calcEval()}});
+  root.addEventListener("dragstart",e=>{const c=e.target.closest&&e.target.closest(".chip");if(!c)return;try{e.dataTransfer.setData("text/plain",c.dataset.item);e.dataTransfer.effectAllowed="move"}catch(err){}});
+  root.addEventListener("dragover",e=>{const b=e.target.closest&&e.target.closest("[data-bin]");if(b){e.preventDefault();b.classList.add("over")}});
+  root.addEventListener("dragleave",e=>{const b=e.target.closest&&e.target.closest("[data-bin]");if(b)b.classList.remove("over")});
+  root.addEventListener("drop",e=>{const b=e.target.closest&&e.target.closest("[data-bin]");if(!b)return;e.preventDefault();b.classList.remove("over");let id="";try{id=e.dataTransfer.getData("text/plain")}catch(err){}if(!id)return;const q=qs[st.i];const A=Object.assign({},st.ans[q.id]||{});if(b.dataset.bin)A[id]=b.dataset.bin;else delete A[id];st.sel=null;setAns(A)});
+  const timeEl=$(".tx-time",root);
+  const timer=setInterval(()=>{if(st.done)return;const s=Math.round((Date.now()-st.t0)/1000);timeEl.textContent="Time used "+String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")},1000);
+  timeEl.textContent="Time used 00:00";
+  renderQ();renderPanel();
+  return{
+    spotlight(key){$$(".spot",root).forEach(x=>x.classList.remove("spot"));const el=$(`[data-tour="${key}"]`,root);if(el){el.classList.add("spot");el.scrollIntoView({block:"nearest",behavior:"smooth"})}},
+    destroy(){clearInterval(timer)}
+  };
+}
+
+/* ---------------- stations / navigation ---------------- */
+const sections=$$(".station");
+const order=sections.map(s=>s.id);
+const studentIds=order.filter(id=>id!=="teacher");
+let visited=new Set(store.get("visited",["welcome"]));
+function buildRail(){
+  $("#rail").innerHTML=sections.map((s,k)=>{const isT=s.id==="teacher";return (isT?'<li class="sep" aria-hidden="true"></li>':"")+`<li><button type="button" data-goto="${s.id}" class="${visited.has(s.id)?"seen":""}"><span class="num">${isT?"T":k+1}</span><span>${esc(s.dataset.label)}</span><span class="tick">✓</span></button></li>`}).join("");
+}
+function show(id){
+  if(!order.includes(id))id="welcome";
+  sections.forEach(s=>s.hidden=s.id!==id);
+  visited.add(id);store.set("visited",[...visited]);
+  buildRail();
+  $$("#rail [data-goto]").forEach(b=>{if(b.dataset.goto===id)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current")});
+  const n=studentIds.filter(x=>visited.has(x)).length;
+  $("#prog-txt").textContent=`${n} of ${studentIds.length} stations`;$("#prog-bar").style.width=(n/studentIds.length*100)+"%";
+  try{if(location.hash.slice(1)!==id)history.replaceState(null,"","#"+id)}catch(e){}
+  const cur=$("#"+id);const h=$("h2",cur);
+  try{window.scrollTo(0,0)}catch(e){}
+  if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true})}
+  try{speechSynthesis.cancel()}catch(e){}
+}
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-goto]");if(g&&!g.closest(".tx")){show(g.dataset.goto);return}
+  const nx=e.target.closest("[data-next]");if(nx){const i=order.indexOf(nx.closest(".station").id);show(order[Math.min(order.length-1,i+1)]);return}
+  const pv=e.target.closest("[data-prev]");if(pv){const i=order.indexOf(pv.closest(".station").id);show(order[Math.max(0,i-1)]);return}
+  const ls=e.target.closest(".listen");if(ls){const sec=ls.closest(".station");say($$("[data-read]",sec).map(x=>x.textContent).join(" "));return}
+});
+$$(".listen").forEach(b=>b.innerHTML=I.speaker+"Listen");
+window.addEventListener("hashchange",()=>{const id=location.hash.slice(1);if(order.includes(id))show(id)});
+
+/* ---------------- key word popovers ---------------- */
+let pop=null;
+function closePop(){if(pop){pop.remove();pop=null}}
+function openPop(el){closePop();pop=document.createElement("div");pop.className="pop";pop.setAttribute("role","tooltip");pop.innerHTML=`<b>${esc(el.textContent)}</b>${esc(el.dataset.def)}`;document.body.appendChild(pop);
+  const r=el.getBoundingClientRect();const pw=Math.min(280,window.innerWidth-32);let left=r.left+window.scrollX;left=Math.max(16,Math.min(left,window.scrollX+window.innerWidth-pw-16));pop.style.left=left+"px";pop.style.top=(r.bottom+window.scrollY+8)+"px";}
+document.addEventListener("click",e=>{const k=e.target.closest(".kw");if(k){openPop(k);e.stopPropagation()}else if(!e.target.closest(".pop"))closePop()},true);
+document.addEventListener("keydown",e=>{const k=e.target.closest&&e.target.closest(".kw");if(k&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openPop(k)}if(e.key==="Escape")closePop()});
+
+/* ---------------- saved text inputs ---------------- */
+const notes=store.get("notes",{});
+function bindSaved(sel){$$(sel).forEach(inp=>{if(notes[inp.id])inp.value=notes[inp.id];inp.addEventListener("input",()=>{notes[inp.id]=inp.value;store.set("notes",notes)})})}
+
+/* ---------------- feelings scale ---------------- */
+const FEEL=["Very worried","A little worried","Not sure","Okay","Ready"];
+function feelScale(el){
+  const key=el.dataset.key;let v=store.get(key,null);
+  const draw=()=>{el.innerHTML=FEEL.map((f,k)=>`<button type="button" data-f="${k}" aria-pressed="${v===k}"><span class="bars" aria-hidden="true">${[0,1,2,3,4].map(j=>`<i class="${j<=k?"on":""}" style="height:${8+j*5}px"></i>`).join("")}</span>${f}</button>`).join("")};
+  draw();
+  el.addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;v=+b.dataset.f;store.set(key,v);draw();compareFeel()});
+}
+function compareFeel(){
+  const a=store.get("feelIn",null),b=store.get("feelOut",null),out=$("#feel-compare");if(!out)return;
+  if(a==null||b==null){out.textContent="";return}
+  if(b>a)out.textContent=`At the start you felt "${FEEL[a]}". Now you feel "${FEEL[b]}". Your practice is working.`;
+  else if(b===a)out.textContent=`You felt "${FEEL[a]}" at the start and now. That is okay. Talk to your teacher about one thing that would help.`;
+  else out.textContent=`You felt "${FEEL[a]}" at the start. Now you feel "${FEEL[b]}". Thinking about the test can bring up feelings. Tell your teacher what is worrying you.`;
+}
+
+/* ---------------- desk ---------------- */
+const DESK=[
+  {n:"Pencil and eraser",ok:true,why:"Use them for rough work."},
+  {n:"Paper for rough work",ok:true,why:"It is collected after each session. It is not marked."},
+  {n:"Scientific or graphing calculator",ok:true,why:"You can bring your own. The test also has a calculator."},
+  {n:"Ruler",ok:true,why:"Helpful for graphs and for keeping your place."},
+  {n:"Headphones",ok:true,why:"Use them with the read-aloud tool."},
+  {n:"Printed EQAO Formula Sheet",ok:true,why:"A printed copy from EQAO is allowed. It is also inside the test."},
+  {n:"Your own notes or formula sheet",ok:false,why:"Only the EQAO Formula Sheet is allowed."},
+  {n:"Translation app or website",ok:false,why:"Apps with a glossary are not allowed. Learn key words now."},
+  {n:"Example questions to copy from",ok:false,why:"Examples of questions are not allowed."},
+  {n:"Your phone",ok:false,why:"Keep it off and in your bag. Check your school's rules."}
+];
+let deskAns={};
+function drawDesk(checked){
+  $("#desk-sort").innerHTML=DESK.map((d,k)=>{const a=deskAns[k];const cls=checked&&a!=null?(a===d.ok?"ok":"no"):"";
+    return `<div class="scard ${cls}"><span class="nm">${esc(d.n)}</span><div class="ch" role="group" aria-label="${esc(d.n)}"><button type="button" data-dk="${k}" data-v="1" aria-pressed="${a===true}">Allowed</button><button type="button" data-dk="${k}" data-v="0" aria-pressed="${a===false}">Not allowed</button></div>${checked&&a!=null?`<span class="why">${a===d.ok?"Correct. ":"Not quite. "}${esc(d.why)}</span>`:""}</div>`}).join("");
+}
+$("#desk-sort").addEventListener("click",e=>{const b=e.target.closest("[data-dk]");if(!b)return;deskAns[b.dataset.dk]=b.dataset.v==="1";drawDesk(false);$("#desk-fb").textContent=""});
+$("#desk-check").addEventListener("click",()=>{const n=Object.keys(deskAns).length;if(n<DESK.length){$("#desk-fb").textContent=`Choose an answer for all ${DESK.length} items first. You have ${n}.`;$("#desk-fb").className="fb no";return}
+  const r=DESK.filter((d,k)=>deskAns[k]===d.ok).length;drawDesk(true);$("#desk-fb").textContent=`${r} of ${DESK.length} correct.`;$("#desk-fb").className="fb "+(r===DESK.length?"ok":"no")});
+$("#desk-reset").addEventListener("click",()=>{deskAns={};drawDesk(false);$("#desk-fb").textContent=""});
+drawDesk(false);
+
+function deskSVG(right){
+  const W=right?470:30, O=right?30:470; /* write-side x, other-side x */
+  let s=`<rect class="d-desk" x="10" y="20" width="620" height="300" rx="16"/>`;
+  /* laptop */
+  s+=`<rect class="d-dev" x="200" y="40" width="240" height="118" rx="8"/><rect class="d-scr" x="212" y="50" width="216" height="98" rx="4"/>`;
+  s+=`<text class="d-note" x="320" y="104" text-anchor="middle">Test screen</text>`;
+  s+=`<rect class="d-dev" x="210" y="166" width="220" height="118" rx="8"/>`;
+  for(let r=0;r<4;r++)for(let c=0;c<10;c++)s+=`<rect class="d-key" x="${222+c*20.5}" y="${178+r*18}" width="16" height="13" rx="2"/>`;
+  s+=`<rect class="d-key" x="285" y="252" width="70" height="22" rx="4"/>`;
+  s+=`<text class="d-lbl" x="320" y="308" text-anchor="middle">Laptop in the centre</text>`;
+  /* write side: pencil + paper */
+  s+=`<text class="d-lbl" x="${W}" y="50">Pencil + eraser</text>`;
+  s+=`<line class="d-acc" x1="${W+4}" y1="66" x2="${W+104}" y2="66"/><path class="d-ink" d="M${W+104} 62 l12 4 -12 4"/><rect class="d-fillbad" x="${W+118}" y="60" width="18" height="12" rx="3"/>`;
+  s+=`<text class="d-lbl" x="${W}" y="98">Rough-work paper</text>`;
+  s+=`<rect class="d-paper" x="${W}" y="108" width="140" height="196" rx="3"/>`;
+  for(let y=128;y<=288;y+=20)s+=`<line class="d-rule" x1="${W+10}" y1="${y}" x2="${W+130}" y2="${y}"/>`;
+  s+=`<line class="d-ink" x1="${W+70}" y1="112" x2="${W+70}" y2="300" style="stroke-dasharray:4 4;stroke:var(--muted)"/><line class="d-ink" x1="${W+4}" y1="${108+98}" x2="${W+136}" y2="${108+98}" style="stroke-dasharray:4 4;stroke:var(--muted)"/>`;
+  /* other side: headphones + calculator + formula sheet */
+  s+=`<text class="d-lbl" x="${O}" y="50">Headphones</text>`;
+  s+=`<path class="d-ink" d="M${O+30} 104 v-14 a40 30 0 0 1 80 0 v14" style="stroke-width:5;stroke:var(--accent)"/><rect class="d-fillacc" x="${O+20}" y="94" width="18" height="26" rx="6"/><rect class="d-fillacc" x="${O+102}" y="94" width="18" height="26" rx="6"/>`;
+  s+=`<text class="d-lbl" x="${O}" y="152">Calculator</text>`;
+  s+=`<rect class="d-dev" x="${O+10}" y="162" width="92" height="130" rx="8"/><rect class="d-scr" x="${O+20}" y="172" width="72" height="24" rx="3"/>`;
+  for(let r=0;r<4;r++)for(let c=0;c<4;c++)s+=`<rect class="d-key" x="${O+20+c*18}" y="${206+r*20}" width="14" height="14" rx="2"/>`;
+  /* bag */
+  s+=`<rect class="d-dev" x="214" y="342" width="34" height="30" rx="6"/><path class="d-ink" d="M222 342 v-6 a9 9 0 0 1 18 0 v6"/>`;
+  s+=`<text class="d-lbl" x="258" y="364">Phone: off and in your bag</text>`;
+  return s;
+}
+function setHand(h){$("#desk-svg").innerHTML=deskSVG(h==="right");$$("[data-hand]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.hand===h));store.set("hand",h)}
+$$("[data-hand]").forEach(b=>b.addEventListener("click",()=>setHand(b.dataset.hand)));
+setHand(store.get("hand","right"));
+
+const CHECKS=["My laptop is charged or plugged in.","My headphones work. I tested the read-aloud tool.","I have my login information from my teacher.","All other tabs and apps are closed.","My desk has only allowed items.","I had water and went to the washroom.","My paper is folded into boxes with question numbers.","I know where the anchor charts are in the room.","I did box breathing. I am ready."];
+const chk=store.get("checks",{});
+$("#desk-checks").innerHTML=CHECKS.map((c,k)=>`<li><label><input type="checkbox" id="chk-${k}" ${chk[k]?"checked":""}><span>${esc(c)}</span></label></li>`).join("");
+$("#desk-checks").addEventListener("change",e=>{const i=e.target.id.split("-")[1];chk[i]=e.target.checked;store.set("checks",chk)});
+
+/* ---------------- whiteboard ---------------- */
+const WB=[
+  `What do I know? <span class="b">y = 6x</span> → m = <span class="b">6</span>, b = <span class="b">0</span>`,
+  `Key words: slope <span class="r">doubles</span> → 6 × 2 = <span class="b">12</span>`,
+  `y-intercept <span class="r">decreases by 5</span> → 0 − 5 = <span class="b">−5</span>`,
+  `New line: <span class="g">y = 12x − 5</span>`,
+  `Check the choices: B is y = 12x − 5 <span class="g">✓</span>. Not 8x: doubles means × 2, not + 2.`
+];
+let wbStep=0;
+function wbDraw(){const wb=$("#wb");$$(".ln",wb).forEach(x=>x.remove());for(let k=0;k<wbStep;k++){const p=document.createElement("p");p.className="ln";p.innerHTML=WB[k];if(k<wbStep-1)p.style.animation="none";wb.appendChild(p)}
+  $("#wb-next").disabled=wbStep>=WB.length;$("#wb-next").textContent=wbStep>=WB.length?"All steps shown":"Show the next step"}
+$("#wb-next").addEventListener("click",()=>{if(wbStep<WB.length){wbStep++;wbDraw()}});
+$("#wb-reset").addEventListener("click",()=>{wbStep=0;wbDraw()});
+wbDraw();
+$("#yt-check").addEventListener("click",()=>{
+  const v=$("#yt-in").value.toLowerCase().replace(/\s/g,"").replace(/[−–]/g,"-").replace(/^y=/,"");
+  const fb=$("#yt-fb");
+  if(!v){fb.textContent="Type your equation first.";fb.className="fb no";return}
+  if(v==="-6x+10"||v==="10-6x"){fb.textContent="Correct! m = −2 × 3 = −6 and b = 7 + 3 = 10.";fb.className="fb ok"}
+  else if(v.includes("-6x")){fb.textContent="The slope is right. Check b: \"increases by 3\" means add 3 to 7.";fb.className="fb no"}
+  else if(v.includes("+10")){fb.textContent="The y-intercept is right. Check m: \"triples\" means × 3.";fb.className="fb no"}
+  else{fb.textContent="Not yet. Write m and b first. Then change each one.";fb.className="fb no"}
+});
+
+/* ---------------- anchor charts ---------------- */
+$("#anchor-charts").innerHTML=`
+ <div class="ac"><h4>Linear or non-linear?</h4>
+   <div class="two">
+     <div><span class="lab g">Linear</span>${plot({size:110,pad:8,xmin:-1,xmax:4,ymin:-1,ymax:9,labels:false,lines:[{m:2,b:1}]})}<table><tr><td>1</td><td>3</td><td>5</td><td>7</td></tr><tr class="g"><td>+2</td><td>+2</td><td>+2</td><td></td></tr></table><span class="hand">straight line<br>same change<br>y = 2x + 1</span></div>
+     <div><span class="lab r">Non-linear</span>${plot({size:110,pad:8,xmin:-1,xmax:4,ymin:-1,ymax:9,labels:false,curves:[{fn:x=>Math.pow(2,x)}]})}<table><tr><td>1</td><td>2</td><td>4</td><td>8</td></tr><tr class="r"><td>+1</td><td>+2</td><td>+4</td><td></td></tr></table><span class="hand">curve<br>change is different<br>y = x², y = 2ˣ</span></div>
+   </div></div>
+ <div class="ac"><h4>y = mx + b</h4>
+   <p class="hand" style="font-size:1.6rem;text-align:center">y = <span class="b">m</span>x + <span class="g">b</span></p>
+   <p class="hand"><span class="b">m</span> = slope = rate of change<br><span class="b">"per", "each"</span></p>
+   <p class="hand"><span class="g">b</span> = y-intercept = initial value<br><span class="g">"starts at", "one-time fee"</span></p>
+   ${plot({size:150,pad:10,xmin:-2,xmax:5,ymin:-1,ymax:9,labels:false,lines:[{m:1.5,b:2}],pts:[{x:0,y:2,label:"b"}]})}</div>
+ <div class="ac"><h4>Slope</h4>
+   <p class="hand" style="font-size:1.35rem">slope = <span class="b">rise</span> ÷ <span class="g">run</span></p>
+   <p class="hand">= (y₂ − y₁) ÷ (x₂ − x₁)</p>
+   <div class="two">
+     <div>${plot({size:100,pad:6,xmin:-3,xmax:3,ymin:-3,ymax:3,labels:false,lines:[{m:1,b:0}]})}<span class="hand g">positive: goes up</span></div>
+     <div>${plot({size:100,pad:6,xmin:-3,xmax:3,ymin:-3,ymax:3,labels:false,lines:[{m:-1,b:0}]})}<span class="hand r">negative: goes down</span></div>
+   </div>
+   <p class="hand">Same slope → parallel lines</p></div>
+ <div class="ac"><h4>Key words → math</h4>
+   <table>
+     <tr><td>doubles</td><td class="b">× 2</td></tr><tr><td>triples</td><td class="b">× 3</td></tr><tr><td>half</td><td class="b">÷ 2</td></tr>
+     <tr><td>increases by</td><td class="b">+</td></tr><tr><td>decreases by</td><td class="b">−</td></tr>
+     <tr><td>per, each</td><td class="b">rate (m)</td></tr><tr><td>starts at, fee</td><td class="b">initial value (b)</td></tr>
+     <tr><td>empty</td><td class="b">0</td></tr><tr><td>constant rate</td><td class="b">linear</td></tr>
+   </table></div>`;
+const ACQ=[
+  {q:"Three of these options show a linear relationship. Select the relationship that is non-linear.",a:["lin"]},
+  {q:"The slope doubles, and the y-intercept decreases by 5. What is the new equation?",a:["key","mxb"]},
+  {q:"Which line has a slope of −4/5 and a y-intercept of 6?",a:["slope","mxb"]},
+  {q:"A plan costs $40 to start and $15 per month. Which equation shows the cost?",a:["mxb","key"]}
+];
+const ACOPT=[["lin","Linear or non-linear?"],["mxb","y = mx + b"],["slope","Slope"],["key","Key words → math"]];
+$("#ac-match").innerHTML=ACQ.map((x,k)=>`<div class="row"><span>${esc(x.q)}</span><select id="ac-${k}" aria-label="Chart for question ${k+1}"><option value="">Choose a chart…</option>${ACOPT.map(o=>`<option value="${o[0]}">${esc(o[1])}</option>`).join("")}</select><span id="acm-${k}" aria-live="polite"></span></div>`).join("");
+$("#ac-check").addEventListener("click",()=>{let r=0,blank=0;ACQ.forEach((x,k)=>{const v=$("#ac-"+k).value,m=$("#acm-"+k);if(!v){blank++;m.textContent="";return}const ok=x.a.includes(v);if(ok)r++;m.textContent=ok?"✓":"✗";m.className=ok?"mark-ok":"mark-no"});
+  const fb=$("#ac-fb");if(blank){fb.textContent=`Choose a chart for every question. ${blank} left.`;fb.className="fb no";return}
+  fb.textContent=r===ACQ.length?"All correct! Some questions can use two charts.":`${r} of ${ACQ.length}. Look for the key word in each question, then find its chart.`;fb.className="fb "+(r===ACQ.length?"ok":"no")});
+
+/* ---------------- desmos lab ---------------- */
+const fmt=n=>String(n).replace("-","−");
+function labDraw(){
+  const m=+$("#lab-m").value,b=+$("#lab-b").value;
+  $("#lab-mo").textContent=fmt(m);$("#lab-bo").textContent=fmt(b);
+  const mT=m===0?"":(m===1?"":m===-1?"−":fmt(m));
+  $("#lab-eq").innerHTML=`y = <span class="m">${m===0?"0":mT+"x"}</span>${b===0&&m!==0?"":` ${b<0?"−":"+"} <span class="bb">${Math.abs(b)}</span>`}`;
+  const lines=[];if($("#lab-ghost").checked)lines.push({m:6,b:0,cls:"ghost"});lines.push({m,b});
+  $("#lab-plot").innerHTML=plot({size:360,xmin:-4,xmax:4,ymin:-12,ymax:12,ystep:2,ylab:4,xlab:1,lines,pts:[{x:0,y:b,label:`(0, ${fmt(b)})`}],title:"Graph of the line"});
+}
+["#lab-m","#lab-b","#lab-ghost"].forEach(s=>$(s).addEventListener("input",labDraw));
+$$("[data-preset]").forEach(btn=>btn.addEventListener("click",()=>{const p=btn.dataset.preset;
+  if(p==="start"){$("#lab-m").value=6;$("#lab-b").value=0;$("#lab-note").textContent="y = 6x: slope 6, y-intercept 0. The line goes through the origin."}
+  if(p==="double"){$("#lab-m").value=+$("#lab-m").value*2>12?12:+$("#lab-m").value*2;$("#lab-note").textContent="The slope doubled: 6 × 2 = 12. The line is steeper. It still crosses the y-axis at the same place."}
+  if(p==="down5"){$("#lab-b").value=Math.max(-10,+$("#lab-b").value-5);$("#lab-note").textContent="The y-intercept decreased by 5. The whole line moved down 5. It is parallel to the line before."}
+  labDraw()}));
+labDraw();
+
+function niceStep(range){const raw=range/6;const p=Math.pow(10,Math.floor(Math.log10(raw||1)));for(const k of [1,2,5,10])if(k*p>=raw)return k*p;return 10*p}
+function tcDraw(){
+  const ys=[0,1,2,3,4].map(k=>$("#tc-"+k).value.trim());
+  const nums=ys.map(v=>v===""?NaN:Number(v.replace("−","-")));
+  const ok=nums.every(Number.isFinite);
+  const d=ok?nums.slice(1).map((v,k)=>+(v-nums[k]).toFixed(6)):[];
+  $("#tc-diff").innerHTML=`<span class="h" title="First differences">Δy</span>`+[0,1,2,3,4].map(k=>`<span class="small">${k<4&&ok?((d[k]>=0?"+":"")+fmt(d[k])):""}</span>`).join("");
+  const out=$("#tc-out");
+  if(!ok){out.className="verdict non";out.textContent="Type a number in every box.";$("#tc-plot").innerHTML="";return}
+  const lin=d.every(x=>Math.abs(x-d[0])<1e-9);
+  let lo=Math.min(0,...nums),hi=Math.max(0,...nums);if(hi-lo<1)hi=lo+1;const st=niceStep(hi-lo);lo=Math.floor(lo/st)*st;hi=Math.ceil(hi/st)*st;if(hi===lo)hi=lo+st;
+  const pts=nums.map((y,x)=>({x,y}));
+  if(lin){const m=d[0],b=nums[0];out.className="verdict lin";out.textContent=`Linear. The first differences are all ${fmt((m>=0?"+":"")+m)}. Slope = ${fmt(m)}, initial value = ${fmt(b)}. Equation: y = ${fmt(m)}x ${b<0?"−":"+"} ${Math.abs(b)}`}
+  else{out.className="verdict non";out.textContent="Non-linear. The first differences are not the same, so the points do not make a straight line."}
+  $("#tc-plot").innerHTML=plot({size:340,xmin:-1,xmax:5,ymin:lo,ymax:hi,xstep:1,xlab:1,ystep:st,ylab:st,pts,lines:lin?[{m:d[0],b:nums[0]}]:[],curves:[],title:"Points from the table"});
+}
+$$("[id^=tc-]").forEach(i=>{if(i.tagName==="INPUT")i.addEventListener("input",tcDraw)});
+$$("[data-tc]").forEach(b=>b.addEventListener("click",()=>{b.dataset.tc.split(",").forEach((v,k)=>$("#tc-"+k).value=v);tcDraw()}));
+tcDraw();
+
+/* ---------------- highlighter exercises ---------------- */
+function hx(el,title,src,text,media){
+  const tokens=[];const keys=[];
+  const re=/\[\[(.+?)\|(.+?)\]\]/g;let last=0,m;
+  const pushWords=s=>s.split(/(\s+)/).forEach(w=>{if(!w)return;if(/^\s+$/.test(w))tokens.push({sp:w});else tokens.push({t:w})});
+  while((m=re.exec(text))){pushWords(text.slice(last,m.index));keys.push({t:m[1],d:m[2]});tokens.push({t:m[1],key:keys.length-1});last=re.lastIndex}
+  pushWords(text.slice(last));
+  el.innerHTML=`<div class="hx"><p class="small muted">${esc(title)} · ${esc(src)}</p><p class="hx-text">${tokens.map((t,k)=>t.sp?t.sp:`<span class="tk" role="button" tabindex="0" data-k="${k}" ${t.key!=null?`data-key="${t.key}"`:""}>${esc(t.t)}</span>`).join("")}</p>${media||""}
+   <div class="wb-ctrl"><button type="button" class="btn primary" data-hx="check">Check my highlights</button><button type="button" class="btn" data-hx="clear">Clear</button><span class="fb" aria-live="polite"></span></div><ul class="hx-keys" hidden></ul></div>`;
+  const fb=$(".fb",el),list=$(".hx-keys",el);
+  el.addEventListener("click",e=>{
+    const tk=e.target.closest(".tk");if(tk){tk.classList.toggle("on");return}
+    const b=e.target.closest("[data-hx]");if(!b)return;
+    if(b.dataset.hx==="clear"){$$(".tk",el).forEach(x=>x.classList.remove("on","reveal"));list.hidden=true;fb.textContent="";return}
+    const found=$$(".tk[data-key].on",el).length;
+    $$(".tk[data-key]",el).forEach(x=>x.classList.add("reveal"));
+    list.innerHTML=keys.map(k=>`<li><b>${esc(k.t)}</b><span>${esc(k.d)}</span></li>`).join("");list.hidden=false;
+    fb.textContent=`You found ${found} of ${keys.length} key words. The key words now have a blue outline.`;fb.className="fb "+(found>=keys.length-1?"ok":"no");
+  });
+  el.addEventListener("keydown",e=>{const tk=e.target.closest(".tk");if(tk&&(e.key==="Enter"||e.key===" ")){e.preventDefault();tk.classList.toggle("on")}});
+}
+hx($("#hx1"),"Question A","EQAO released question, November 2024, #14",
+ "This table shows information about the relationship between the [[amount of water|the y-values, measured in litres]] in a pool, in [[litres|L, the unit for water]], and [[time|the x-values]], in [[minutes|min, the unit for time]]. The pool is being [[emptied|the water goes down]] at a [[constant rate|the same change every minute, so it is linear]]. What is the [[total time|the answer is a time, in minutes]] required to [[empty|water = 0 L]] the pool?",
+ TB(["Time (min)","Amount of water in the pool (L)"],[[0,"60 000"],[10,"55 000"],[20,"50 000"],[40,"40 000"]]));
+hx($("#hx2"),"Question B","EQAO released question, November 2025, #14",
+ "A line is represented by the [[equation|write it as y = mx + b]] y = 6x. The [[slope|m, the number in front of x]] [[doubles|multiply by 2]], and the [[y-intercept|b, where the line crosses the y-axis]] [[decreases by 5|subtract 5]]. What is the equation of the [[new line|the answer is a new equation]]?");
+
+/* ---------------- word wall ---------------- */
+const WALL=[
+ ["slope","How steep a line is. The m in y = mx + b. Slope = rise ÷ run.","y = 3x + 1 → slope 3"],
+ ["rate of change","How much y changes when x goes up by 1. For a line, it is the slope.","$15 per month → 15"],
+ ["y-intercept","Where the line crosses the y-axis, when x = 0. The b in y = mx + b.","y = 3x + 1 → 1"],
+ ["initial value","The starting amount, when x = 0. It is the y-intercept.","one-time fee of $40 → 40"],
+ ["linear","A straight line. y changes by the same amount every step.","2, 5, 8, 11"],
+ ["non-linear","Not a straight line. The change is not the same every step.","1, 2, 4, 8"],
+ ["first differences","Subtract each y-value from the next one.","3, 7, 11 → +4, +4"],
+ ["constant","Does not change. Stays the same.","constant rate → linear"],
+ ["increases by / decreases by","Add / subtract.","decreases by 5 → − 5"],
+ ["doubles / triples / halves","Multiply by 2 / multiply by 3 / divide by 2.","slope 6 doubles → 12"],
+ ["per / each","For every one. It tells you a rate.","$15 per month → m = 15"],
+ ["parallel","Lines that never meet. They have the same slope.","y = 3x + 1 and y = 3x + 5"],
+ ["table of values","A table of x and y pairs.","x: 0, 1, 2 · y: 3, 7, 11"],
+ ["equation","A math sentence with an equal sign.","y = 4x + 3"],
+ ["Select the TWO","Choose exactly two answers.","☐ A ☑ B ☑ C ☐ D"],
+ ["Which statement is true?","Read every choice. Only one is correct.","Check each choice with your work."],
+ ["closest to","The answer is rounded. Choose the nearest value.","12.4 is closest to 12"],
+ ["empty","Nothing is left. The amount is 0.","empty pool → 0 L"]
+];
+$("#wall").innerHTML=WALL.map((w,k)=>`<div class="wcard"><div class="t"><span>${esc(w[0])}</span><button type="button" data-say="${k}" aria-label="Listen to ${esc(w[0])}">${I.speaker}</button></div><p class="m">${esc(w[1])}</p><p class="ex">${esc(w[2])}</p><label for="ww-${k}">In my language</label><input id="ww-${k}" class="ww" autocomplete="off"></div>`).join("");
+$("#wall").addEventListener("click",e=>{const b=e.target.closest("[data-say]");if(b){const w=WALL[+b.dataset.say];say(w[0]+". "+w[1])}});
+
+/* ---------------- tour ---------------- */
+const TOUR=[
+ ["where","Session and stage","Shows which session and stage you are in. Each session has two stages."],
+ ["nav","Question numbers","Click a number to jump to a question. Blue means answered. An orange dot means flagged."],
+ ["question","The question","Read the question and look at any table or graph. Your answer goes below it."],
+ ["tts","Read aloud","Plug in your headphones. The computer reads the question to you."],
+ ["zoom","Zoom in and out","Make the words and graphs bigger or smaller."],
+ ["reader","Line reader","Darkens the screen except one line. It helps you focus and not lose your place."],
+ ["hl","Highlighter","Turn it on, then click key words in the question to highlight them."],
+ ["calc","Calculator","A calculator is built in. You can also use your own."],
+ ["docs","Documents","Has the EQAO Formula Sheet and the English–French glossary."],
+ ["flag","Flag","Marks a question so you remember to come back. Answer it first, then flag it."],
+ ["prevnext","Previous and Next","Move one question at a time."],
+ ["review","Review and submit","Shows flagged and blank questions. After you submit a stage, you cannot go back."]
+];
+const tourEngine=makeTest($("#tour-test"),{session:"Practice tour",stage:"Stage 1 of 2",mode:"tour",questions:[Object.assign({},STAGE1[1],{id:"t1"}),Object.assign({},STAGE1[5],{id:"t2"}),Object.assign({},STAGE1[7],{id:"t3"})]});
+$("#tour-legend").innerHTML=TOUR.map(t=>`<li><button type="button" data-tk="${t[0]}" aria-pressed="false"><span><span class="lt">${esc(t[1])}</span><span class="ld">${esc(t[2])}</span></span></button></li>`).join("");
+$("#tour-legend").addEventListener("click",e=>{const b=e.target.closest("[data-tk]");if(!b)return;$$("[data-tk]").forEach(x=>x.setAttribute("aria-pressed",x===b));tourEngine.spotlight(b.dataset.tk)});
+
+/* ---------------- calm ---------------- */
+const SELF=[["I can't do this.","I can't do this yet. I will flag it and come back."],["Everyone else is faster than me.","This is not a race. I will use my time."],["I made a mistake, so I am bad at math.","Mistakes help my brain grow. I can fix it."],["My English is not good enough for this test.","I know the key words. I can read it two times and listen."]];
+$("#flips").innerHTML=SELF.map((s,k)=>`<button type="button" class="flip" data-flip="${k}" aria-pressed="false"><span class="k">Tap to change</span><span class="tx1 front">"${esc(s[0])}"</span></button>`).join("");
+$("#flips").addEventListener("click",e=>{const b=e.target.closest("[data-flip]");if(!b)return;const on=b.getAttribute("aria-pressed")!=="true";const s=SELF[+b.dataset.flip];b.setAttribute("aria-pressed",on);
+  b.innerHTML=on?`<span class="k">Helpful thought</span><span class="tx1 back">"${esc(s[1])}"</span>`:`<span class="k">Tap to change</span><span class="tx1 front">"${esc(s[0])}"</span>`});
+const STRESS=[["My mind goes blank.","Stop. Do box breathing once. Then write what you know on your paper: the numbers, m, b, the table."],["The question is very long.","Read the last sentence first to find the question. Highlight the key words. Cross out words you do not need."],["I don't know a word.","Look at the anchor charts. Use the words around it. Check the glossary in Documents. You can still answer."],["Time is running out.","Answer every question. Cross out choices that cannot be right, then choose. Blank questions get no marks."],["Other students finish before me.","That is okay. Finishing early does not mean a better mark. Use your time to check flagged questions."],["I changed my answer and now I'm not sure.","Look at your paper work. If your work shows the answer, trust it."]];
+$("#stress-acc").innerHTML=STRESS.map(s=>`<details class="acc"><summary>${esc(s[0])}</summary><div><p>${esc(s[1])}</p></div></details>`).join("");
+let bTimer=null,bPhase=0,bCount=0;
+const bdot=$("#bdot"),bword=$("#bword");
+const corners=[["-12px","calc(100% - 10px)"],["-12px","-12px"],["calc(100% - 10px)","-12px"],["calc(100% - 10px)","calc(100% - 10px)"]];
+const words=["Breathe in…","Hold…","Breathe out…","Hold…"];
+function bStep(){bdot.style.transitionDuration="4s";const c=corners[(bPhase+1)%4];bdot.style.left=c[0];bdot.style.top=c[1];bword.textContent=words[bPhase];bPhase=(bPhase+1)%4;if(bPhase===0)bCount++;if(bCount>=4){bStop("Well done.");return}bTimer=setTimeout(bStep,4000)}
+function bStop(msg){clearTimeout(bTimer);bTimer=null;bdot.style.transitionDuration="0s";bdot.style.left=corners[0][0];bdot.style.top=corners[0][1];bword.textContent=msg||"Ready?";bPhase=0;bCount=0}
+$("#b-start").addEventListener("click",()=>{bStop();requestAnimationFrame(()=>requestAnimationFrame(bStep))});
+$("#b-stop").addEventListener("click",()=>bStop());
+
+/* ---------------- practice ---------------- */
+let engine=null;
+function resultsHTML(res,label){
+  let right=0;
+  const rows=res.questions.map((q,k)=>{const a=res.answers[q.id];const ok=isCorrect(q,a);if(ok)right++;
+    return `<details class="res ${ok?"ok":"no"}" ${ok?"":"open"}><summary><span class="res-n">Q${k+1}</span><span class="res-tag">${ok?"Correct":"Not yet"}</span><span>${esc(q.short)}</span></summary><div class="res-b"><p><b>Your answer:</b> ${esc(answerTextOf(q,a))} · <b>Correct answer:</b> ${esc(q.answerText)}</p><p>${esc(q.explain)}</p>${q.tip?`<p class="res-tip"><span>Tip</span>${esc(q.tip)}</p>`:""}<p class="small muted">${esc(q.src)}</p></div></details>`}).join("");
+  const n=res.questions.length,m=Math.floor(res.seconds/60),s=res.seconds%60;
+  const msg=right===n?"Excellent work. You are ready for this kind of question.":right>=n*.7?"Strong work. Read the tips for the questions marked Not yet.":"Good effort. Every Not yet is something to learn before test day. Read each explanation.";
+  return {right,html:`<div class="block"><h3>${esc(label)} results</h3><div class="res-head"><span class="score">${right} / ${n}</span><div><p>${msg}</p><p class="small muted">Time used: ${m} min ${s} s · Flagged: ${res.flags.length}</p></div></div><div class="res-list">${rows}</div></div>`};
+}
+function startStage(n){
+  $("#pr-intro").hidden=true;
+  const host=$("#pr-stage");host.innerHTML=`<div id="test-s${n}"></div>`;
+  if(engine)engine.destroy();
+  engine=makeTest($("#test-s"+n),{session:"Practice Session",stage:`Stage ${n} of 2`,mode:"practice",questions:n===1?STAGE1:STAGE2,
+    onSubmit(res){
+      engine.destroy();engine=null;host.innerHTML="";
+      const r=resultsHTML(res,n===1?"Stage 1: Math":"Stage 2: Test skills");
+      const scores=store.get("scores",{});scores["s"+n]=r.right;store.set("scores",scores);
+      const box=document.createElement("div");box.className="block";box.innerHTML=r.html;
+      const ctl=document.createElement("div");ctl.className="wb-ctrl";
+      if(n===1)ctl.innerHTML=`<button type="button" class="btn primary" id="pr-s2">Start Stage 2: Test skills</button>`;
+      else ctl.innerHTML=`<button type="button" class="btn primary" data-goto="tips">Go to Tips for success →</button><button type="button" class="btn" id="pr-again">Take the practice test again</button>`;
+      box.appendChild(ctl);$("#pr-results").appendChild(box);
+      if(n===1)$("#pr-s2").addEventListener("click",()=>{ctl.remove();startStage(2)});
+      else $("#pr-again").addEventListener("click",()=>{$("#pr-results").innerHTML="";$("#pr-intro").hidden=false;$("#pr-intro").scrollIntoView({behavior:"smooth"})});
+      box.scrollIntoView({behavior:"smooth",block:"start"});
+    }});
+  host.scrollIntoView({behavior:"smooth",block:"start"});
+}
+$("#pr-start").addEventListener("click",()=>{$("#pr-results").innerHTML="";startStage(1)});
+
+/* ---------------- boot ---------------- */
+$$(".feel").forEach(feelScale);compareFeel();
+bindSaved("#feelin-a,#feelin-b,#calm-a,#calm-b,#calm-c,#plan-1,#plan-2,#plan-3,#ident-1,.ww");
+const start=location.hash.slice(1);
+show(order.includes(start)?start:"welcome");
+})();
+</script>
+
+</body>
+</html>
